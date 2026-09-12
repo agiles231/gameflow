@@ -1,0 +1,2 @@
+verification/temporary/*
+!verification/temporary/.gitignore

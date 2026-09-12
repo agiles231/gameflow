@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "next_id": 2,
+  "tasks": [
+    {
+      "id": "TASK-0001",
+      "title": "Define the first vertical slice",
+      "status": "ready",
+      "parent": null,
+      "depends_on": [],
+      "owner": null,
+      "contract": "tasks/TASK-0001.md"
+    }
+  ]
+}

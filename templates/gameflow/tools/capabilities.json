@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "capabilities": [],
+  "preference_order": [
+    "deterministic-cli",
+    "application-api",
+    "mcp-or-function-tool",
+    "desktop-ui"
+  ]
+}

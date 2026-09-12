@@ -1,0 +1,25 @@
+{
+  "name": "gameflow",
+  "version": "0.1.0",
+  "description": "A durable, task-oriented game development workflow for Codex, Unreal Engine, Blender, and visual production tools.",
+  "author": {
+    "name": "Andrew"
+  },
+  "license": "MIT",
+  "keywords": ["game-development", "unreal-engine", "blender", "workflow", "orchestration"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "GameFlow",
+    "shortDescription": "Durable agent workflows for game production",
+    "longDescription": "Initialize and operate resumable game projects through bounded tasks, explicit acceptance criteria, asset provenance, and disposable visual verification.",
+    "developerName": "Andrew",
+    "category": "Developer Tools",
+    "capabilities": ["Project initialization", "Task orchestration", "Asset workflows", "Verification"],
+    "defaultPrompt": [
+      "Initialize GameFlow in this game project.",
+      "Resume this GameFlow project and pick the next task.",
+      "Audit this project's GameFlow state."
+    ],
+    "brandColor": "#473BF0"
+  }
+}
