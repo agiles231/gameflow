@@ -1,6 +1,6 @@
 {
   "name": "gameflow",
-  "version": "0.1.0+codex.20260912164936",
+  "version": "0.1.0+codex.20260913230821",
   "description": "A durable, task-oriented game development workflow for Codex, Unreal Engine, Blender, and visual production tools.",
   "author": {
     "name": "Andrew"
