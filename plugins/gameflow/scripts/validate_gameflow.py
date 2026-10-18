@@ -99,6 +99,13 @@ def validate_task_graph(index, flow: Path, errors: list[str]) -> None:
                 errors.append(f"{task_id} has unknown dependency {dependency!r}")
             else:
                 dependencies[task_id].append(dependency)
+                if task.get("checkpoint") is not None and task.get("status") in ("ready", "executing", "verify"):
+                    prerequisite = by_id[dependency]
+                    if prerequisite.get("status") != "done":
+                        errors.append(f"{task_id} has unfinished prerequisite {dependency}")
+                    prior_checkpoint = prerequisite.get("checkpoint")
+                    if isinstance(prior_checkpoint, dict) and isinstance(prior_checkpoint.get("commit"), dict) and prior_checkpoint["commit"].get("state") in ("pending", "failed"):
+                        errors.append(f"{task_id} prerequisite {dependency} needs commit recovery")
                 if by_id[dependency].get("status") == "deferred":
                     errors.append(f"{task_id} depends on deferred task {dependency}; deferred tasks must have no dependents")
         parent = task.get("parent")

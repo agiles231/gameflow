@@ -9,6 +9,7 @@ import tempfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from checkpoint_preflight import identity, inspect_task, validate_checkpoint
+from validate_gameflow import validate_task_graph
 
 
 def main():
@@ -65,6 +66,19 @@ def main():
                              ('commit', {'state': 'committed'}), ('phase', 'executing'), ('jobs', None)]:
             malformed = copy.deepcopy(task); malformed['checkpoint'][field] = value
             assert validate_checkpoint(malformed), field
+        prerequisite = copy.deepcopy(task)
+        prerequisite.update(contract='tasks/TASK-0001.md', depends_on=[], parent=None)
+        prerequisite['checkpoint']['commit']['state'] = 'failed'
+        dependent = copy.deepcopy(prerequisite)
+        dependent.update(id='TASK-0002', status='verify', depends_on=['TASK-0001'])
+        dependent['checkpoint']['phase'] = 'verify'
+        (root / '.gameflow/tasks/TASK-0001.md').write_text('contract')
+        graph = {'next_id': 3, 'tasks': [prerequisite, dependent]}
+        errors = []; validate_task_graph(graph, root / '.gameflow', errors)
+        assert any('needs commit recovery' in error for error in errors)
+        prerequisite['checkpoint']['commit']['state'] = 'committed'
+        errors = []; validate_task_graph(graph, root / '.gameflow', errors)
+        assert not errors, errors
         assert validate_checkpoint({'id': 'TASK-0002', 'status': 'done'}) == []
         assert inspect_task(root, {'id': 'TASK-0002', 'status': 'done'})['action'] == 'legacy-review'
     print('Checkpoint identity and recovery tests passed.')
