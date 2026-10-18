@@ -1,0 +1,4 @@
+interface:
+  display_name: "GameFlow Tool Discovery"
+  short_description: "GameFlow workflows for tool discovery"
+  default_prompt: "Use $tool-discovery for the selected GameFlow task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "GameFlow Build Delivery"
+  short_description: "GameFlow workflows for build delivery"
+  default_prompt: "Use $build-delivery for the selected GameFlow task."

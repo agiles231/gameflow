@@ -1,0 +1,4 @@
+interface:
+  display_name: "GameFlow Asset Generation"
+  short_description: "GameFlow workflows for asset generation"
+  default_prompt: "Use $asset-generation for the selected GameFlow task."

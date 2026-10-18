@@ -8,7 +8,7 @@ Never depend on a prior conversation to resume work. Before stopping, update the
 
 ## Task lifecycle
 
-Tasks move through `planned`, `ready`, `executing`, `verify`, `done`, or `blocked`.
+Tasks move through `planned`, `ready`, `executing`, `verify`, `done`, `blocked`, or `deferred`.
 
 ```text
 planned -> ready -> executing -> verify -> done
@@ -30,17 +30,64 @@ Approved references and final artifacts are durable. Screenshots, viewport captu
 
 Verification results record the task, artifact hashes or revisions, application versions, view/camera configuration, checks, outcome, and durable evidence paths.
 
-## Automation hierarchy
+## Capability-based automation
 
-Prefer, in order:
+Use native CLI for builds, supported MCP operations for connected application work,
+application scripting for gaps, and UI only when needed. Discover actual schemas
+and verify project/file identity and host paths before edits. Prefer suitable
+Meshy MCP for every complex mesh within configured allowance. Local creation is limited to explicit simple shapes; Blender integration is noncreative. No direct HTTP, UI, local modeling or other-provider generation fallback. All rigging/animation production is deferred and future providers never autoactivate.
 
-1. Native project files and deterministic command-line tools.
-2. Application scripting APIs (Unreal Python/commandlets, Blender Python, GIMP batch procedures).
-3. Purpose-built MCP or function tools.
-4. Desktop UI automation for operations without a reliable programmable interface.
+## CLI and worker boundary
 
-UI runs must be bounded, cancellable, and verified from actual resulting state.
+Skills operate inside Codex sessions, not a background service. The coordinator is
+the single writer of shared task/asset/handoff state and owns application leases
+recorded in task contracts. Workers report proposed transitions and evidence.
+Only a distinct verifier can accept frozen artifacts. Preserve IDs and optional
+worker/provenance metadata for future UI readers without a new task database.
 
 ## Skill extensions
 
-Add application-specific skills only after a real workflow is exercised. Each production skill should define inputs, outputs, application/version assumptions, deterministic path where available, UI fallback, acceptance checks, and recovery behavior. It should consume and update the shared task and asset contracts rather than inventing another state system.
+Qualify application-specific skills with real workflows and explicitly identify stages not yet live-tested. Each production skill should define inputs, outputs, application/version assumptions, permitted execution routes, acceptance checks, and recovery behavior. It should consume and update the shared task and asset contracts rather than inventing another state system.
+
+## Meshy configuration and delivery
+
+Use meshy-config to maintain nonsecret `.gameflow/tools/meshy.json`. Effective settings resolve project defaults, then the selected recipe, then explicit task overrides. Inspect actual Meshy MCP schemas, preserve job IDs/downloads/settings/provenance, and reconcile uncertain jobs before resubmitting. Credentials remain outside project state. Missing provider support or allowance blocks only dependent work.
+
+Meshy acceptance remains independent but cheap: completed job, expected readable files, dependencies, intended import/loading and recorded identity/provenance. Artistic/anatomy/topology reviews, numerical quality audits, render batches and creative repair require an explicit request. Gameplay/build tests are unchanged. Record approved acceptance-scope changes rather than claiming inherited audits passed.
+
+## Deferred work
+
+Use `deferred` for postponed work, including every rigging/animation production task. Preserve artifacts, reason and explicit reactivation condition; reconcile live ownership before clearing it. Deferred is not done and is excluded from autonomous selection. Deferred tasks must have no dependents. Rescope affected active task contracts explicitly before removing edges; record the decision. Combine rigging and animation into one deferred leaf per asset depending on delivery of its static mesh. Only explicit direction satisfying its reactivation condition returns it to `planned`; normal prerequisites govern readiness. New provider availability does not reactivate work. Required deferred work prevents overall completion.
+
+## Optional manual asset review
+
+Manual review is independent of technical acceptance and never an approval gate.
+After each completed asset delivery, retain a revision-bound review entry and
+refresh a dedicated Blender review scene with the five newest unapproved assets.
+Older entries remain tracked. Silence changes neither technical acceptance nor
+queue membership. Explicit approval applies only to the displayed revision.
+
+Protect user-owned Blender sessions and defer presentation when unsafe; record a
+pending refresh so it can be retried without blocking unrelated production. A
+presentation failure is not an asset acceptance failure. Show stable asset IDs,
+revision labels and materials; never alter the production sources for display.
+
+Explicit disapproval reopens the original task for interactive revision, preserves
+the prior accepted files and evidence, and records downstream consumers requiring
+recheck. Unrelated autonomous work may continue. Replacement artifacts need fresh
+independent acceptance and a new optional review entry. See the
+[asset pipeline](../skills/asset-pipeline/SKILL.md) for queue and presentation rules.
+
+## Recoverable checkpoints
+
+Task acceptance and Git commit status are distinct. Resume pending provider jobs,
+implementation, verification, repairs, or an accepted task's pending commit before
+selecting new work. A valid checkpoint records phase, task-owned changes, evidence,
+actual jobs and the next action. Preserved unrelated changes remain protected.
+
+Reconcile a previous worker's liveness and changes before adopting ownership; do
+not reject a checkpoint merely because its own recorded files are dirty. Review
+shared-state deltas and stop only the affected ambiguous action when attribution
+is unresolved. Historical projects can be reconciled into checkpoint metadata
+without discarding work or repeating already-paid jobs. See
+[autopilot](../skills/autopilot/SKILL.md) for the lifecycle protocol.

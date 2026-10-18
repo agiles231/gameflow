@@ -1,0 +1,4 @@
+interface:
+  display_name: "GameFlow Unreal Development"
+  short_description: "GameFlow workflows for unreal development"
+  default_prompt: "Use $unreal-development for the selected GameFlow task."

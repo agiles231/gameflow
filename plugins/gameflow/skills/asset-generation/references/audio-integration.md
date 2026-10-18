@@ -1,0 +1,7 @@
+# Audio production and integration
+
+Determine whether the brief requests effects, ambience, music, dialogue, or engine mixing. Future generation providers are inactive; Meshy is not an audio generator. Use approved existing sources or explicitly scoped deterministic audio editing where appropriate. Otherwise leave source production blocked. Do not silently substitute placeholder audio for an accepted final asset.
+
+Record source/license, edit project or reproducible processing, sample rate/bit depth, channel layout, duration/loop points, and loudness/headroom targets where relevant. Preserve a lossless master. Measure clipping, unwanted silence, seams, and channels; assess audible quality by listening when supported. Waveform statistics alone cannot establish artistic acceptance. Record unavailable listening capability for the independent verifier.
+
+Import through discovered Unreal tools or the project's existing pipeline. Validate asset type, naming, destination, compression/streaming policy, attenuation, concurrency, bus/submix routing, and triggering behavior as required by the brief. Use the project's established audio implementation, respecting code-only or asset-graph constraints. Test loops, transitions, spatial behavior, interruption and simultaneous playback in the intended scene. Capture reproducible playback steps and evidence; do not infer runtime behavior solely from successful import.

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "enabled": true,
+  "window_size": 5,
+  "entries": [],
+  "presentation": {
+    "status": "pending",
+    "selection": [],
+    "reason": "Not presented yet"
+  }
+}

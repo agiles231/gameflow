@@ -1,6 +1,6 @@
 {
   "name": "gameflow",
-  "version": "0.1.0+codex.20260913233739",
+  "version": "0.4.0",
   "description": "A durable, task-oriented game development workflow for Codex, Unreal Engine, Blender, and visual production tools.",
   "author": {
     "name": "Andrew"
@@ -21,10 +21,13 @@
     "developerName": "Andrew",
     "category": "Developer Tools",
     "capabilities": [
-      "Project initialization",
-      "Task orchestration",
-      "Asset workflows",
-      "Verification"
+      "Project planning and durable tasks",
+      "Meshy MCP recipes and static asset production",
+      "Deferred rigging and animation",
+      "Independent delivery acceptance",
+      "Unreal integration and bounded CLI delegation",
+      "Optional revision-bound Blender review",
+      "Recoverable checkpoints and commit reconciliation"
     ],
     "defaultPrompt": [
       "Initialize GameFlow in this game project.",

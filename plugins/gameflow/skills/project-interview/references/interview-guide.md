@@ -16,7 +16,7 @@ Checkpoint: the loop is observable player action and feedback, not aspiration.
 
 ## 3. Art and audio direction
 
-Establish visual thesis, shape language, proportions, value, palette, materials, camera/composition, motion/effects/animation language, audio's role, motifs, references, and anti-references. Write accepted conclusions to `ART_DIRECTION.md`. Register durable references in `assets/manifest.json`; transient search or comparison images are not project truth.
+Establish visual thesis, shape language, proportions, value, palette, materials, camera/composition, effects language, audio's role, motifs, references, and anti-references. Write accepted conclusions to `ART_DIRECTION.md`. Register durable references in `assets/manifest.json`; transient search or comparison images are not project truth.
 
 Checkpoint: an asset brief can make inclusion and exclusion decisions without relying only on adjectives.
 
@@ -54,3 +54,7 @@ Do not force a premature answer when a cheap experiment would produce better evi
 ## Resume marker
 
 In `sessions/CURRENT.md`, record the last accepted phase, current unresolved questions, contradictions, next recommended question or decision, and files updated at the checkpoint.
+
+## Current production policy
+
+All complex meshes use Meshy MCP; simple shapes require an explicit local exception. Blender handles noncreative integration. Record project defaults/recipes through meshy-config in `.gameflow/tools/meshy.json`. All rigging/animation production is deferred. Capture future ideas without scheduling their execution or activating future providers. Meshy acceptance uses cheap independent delivery checks; deeper artistic/numerical reviews require an explicit request.

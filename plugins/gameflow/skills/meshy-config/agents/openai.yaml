@@ -1,0 +1,4 @@
+interface:
+  display_name: "GameFlow Meshy Configuration"
+  short_description: "Configure Meshy recipes and generation defaults"
+  default_prompt: "Use $meshy-config to configure this project’s Meshy recipes."

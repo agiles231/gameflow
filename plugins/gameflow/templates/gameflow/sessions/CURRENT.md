@@ -16,3 +16,5 @@ Read `../PROJECT.md`, `../CONSTRAINTS.md`, this file, and `../tasks/index.json`.
 ## Risks and blockers
 
 None recorded.
+
+On resume, reconcile live owners/jobs, accepted work awaiting commit, pending verification and partial implementation before selecting new work. Preserve checkpoint provenance and unrelated edits; an unchanged authorized checkpoint needs no renewed adoption permission. Record task commit hashes in final nonrecursive bookkeeping.

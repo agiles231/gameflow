@@ -1,0 +1,4 @@
+interface:
+  display_name: "GameFlow Blender Production"
+  short_description: "GameFlow workflows for blender production"
+  default_prompt: "Use $blender-production for the selected GameFlow task."

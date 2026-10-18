@@ -12,3 +12,6 @@ After initialization, run `scripts/validate_gameflow.py`. Read the generated `PR
 The plugin remains installed outside the game repository. Only `.gameflow/` and the managed GameFlow block in `AGENTS.md` belong in the game repository.
 
 For an audit request, run validation without initialization. Report structural errors separately from temporary-artifact warnings.
+
+
+For CLI setup, keep plugin code outside the game, reuse configured MCP servers, and follow the repository README for host-specific install commands. Use tool-discovery when application work is selected. Existing projects do not require reinitialization or a schema migration; discuss optional policy additions without replacing established settings.

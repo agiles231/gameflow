@@ -3,8 +3,9 @@
   "capabilities": [],
   "preference_order": [
     "deterministic-cli",
-    "application-api",
     "mcp-or-function-tool",
+    "application-api",
     "desktop-ui"
-  ]
+  ],
+  "selection_policy": "Choose a supported operation by task fit; MCP for supported connected-app work, native CLI for builds, scripting for gaps, UI as fallback. Prefer suitable specialized generation within allowance."
 }

@@ -1,44 +1,79 @@
 # GameFlow marketplace
 
-This repository is a local Codex plugin marketplace containing the GameFlow plugin. GameFlow develops games through durable project state, bounded tasks, explicit verification, and disposable agent sessions.
+GameFlow is a Codex plugin for durable game planning, Meshy-led static asset
+production, Unreal integration, and bounded autonomous work. Version 0.4.0
+contains 14 skills. Plugin code stays outside game repositories; project state
+lives in .gameflow with a small AGENTS.md entrypoint.
 
-The marketplace and plugin live outside game repositories. Each game repository contains only its own `.gameflow/` state and a small managed block in `AGENTS.md`.
+## Install in Codex CLI
 
-## Install in the Codex app
+Run in the host environment where Codex CLI runs (CLI 0.163.0 inspected):
 
-1. Open **Plugins** and select **Add plugin marketplace**.
-2. Select this repository root—the directory containing `.agents/plugins/marketplace.json`.
-3. Open the **GameFlow Local** marketplace and install **GameFlow**.
-4. Start a new task so its bundled skills are loaded.
-
-For this checkout, the marketplace root is `C:\workspace\GameWorkflow`. Do not select `plugins\gameflow`; that is the plugin bundle referenced by the marketplace.
-
-In Codex CLI, add this non-default marketplace and install its plugin:
-
-```text
-codex plugin marketplace add C:\workspace\GameWorkflow
+```sh
+codex plugin marketplace add /mnt/c/workspace/GameWorkflow
 codex plugin add gameflow@gameflow-local
 ```
 
-After installation, start a new Codex task in a game project and ask: `Initialize GameFlow in this project.` You can also run the deterministic initializer directly:
+Native Windows users supply C:\workspace\GameWorkflow instead. To refresh an
+installed local plugin, remove gameflow@gameflow-local and add it again, then
+start a fresh session. Existing MCP connections are reused, never reconfigured.
 
-```text
-python <marketplace>/plugins/gameflow/scripts/init_gameflow.py --project <game-project> --name "My Game" --engine unreal
+## Production workflow
+
+Ask GameFlow to initialize or resume the project. Use gameflow:meshy-config to
+enter the project's prompt recipes, matching criteria, explicit model/settings,
+and spending allowance. Config is nonsecret JSON at .gameflow/tools/meshy.json;
+credentials remain exclusively in the configured Meshy MCP. No direct API client
+or background runner is included.
+
+Meshy MCP creates complex meshes. Codex may author explicitly simple-shape assets
+and perform mechanical integration. Blender is not a complex-authoring fallback.
+Rigging and animation are deferred for ALL providers and local tools. Deferred
+tasks are leaves and are never selected automatically. Reactivation needs explicit
+user direction and a revised supported workflow.
+
+Meshy acceptance checks job success, usable downloads, and engine import when
+required, with an independent verifier. Visual/artistic and dense geometry/motion
+audits are omitted unless explicitly requested. Gameplay/build tests still apply.
+Optional manual review is separate from technical acceptance: completed assets
+remain tracked until explicitly approved, and Blender presents the newest five
+unreviewed assets when safe. Silence never blocks production; disapproval reopens
+the asset task for interactive revision. A dedicated review scene preserves source
+assets and user-owned editor work.
+
+Autopilot reconciles pending checkpoints and accepted-but-uncommitted tasks before
+selecting new work. Recorded task ownership and artifact identities distinguish
+resumable changes from unrelated baseline edits.
+
+One coordinator owns shared state and paid-job reservations; shared editors are
+serialized. Unknown charged jobs are reconciled, never blindly resubmitted.
+
+Recipes resolve operation defaults < selected recipe < explicit task overrides.
+The helper prints a dry-run request and validates against a captured schema;
+actual submission requires rediscovery and validation against the live MCP schema.
+Install scripts/requirements.txt into the chosen Python environment for configured
+schema validation. Empty draft configs need only the standard library.
+
+Existing projects without Meshy config remain structurally valid. Complex-mesh
+production waits for configuration; no model or recipe is invented. Task schema
+version 1 gains the deferred state. Before deferring an existing task, remove
+active dependency gates through explicit scope reconciliation; never silently
+claim its former requirements are satisfied.
+
+## Validation
+
+From plugins/gameflow:
+
+```sh
+python3 tests/test_workflow.py
+python3 tests/test_compatibility.py
+python3 tests/test_task_graph.py
+python3 tests/test_meshy_config.py
+python3 tests/test_checkpoints.py
+python3 tests/test_asset_review.py
 ```
 
-Validate an initialized project with:
-
-```text
-python <marketplace>/plugins/gameflow/scripts/validate_gameflow.py --project <game-project>
-```
-
-## Design
-
-- Project truth is stored in version-controlled files, never in chat history.
-- `tasks/index.json` is the canonical task graph; task Markdown files contain human-readable contracts.
-- Workers receive only explicitly referenced context.
-- Implementation and verification are separate states.
-- Temporary screenshots live under `.gameflow/verification/temporary/` and are excluded from source control.
-- Application APIs and scripts are preferred over desktop automation; UI control is a fallback.
-
-See [`plugins/gameflow/docs/WORKFLOW.md`](plugins/gameflow/docs/WORKFLOW.md) for the lifecycle and extension model.
+See [workflow](plugins/gameflow/docs/WORKFLOW.md),
+[GameFlow glossary](plugins/gameflow/docs/GLOSSARY.md), and
+[validation coverage](plugins/gameflow/docs/VALIDATION.md). No live paid generation
+is required by tests, installation, or configuration.

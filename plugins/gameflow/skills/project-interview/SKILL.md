@@ -35,3 +35,6 @@ The interview is complete when the project has a coherent vision, product pillar
 Use the task-orchestration workflow to split the accepted slice into bounded tasks. Each task must have one principal deliverable, explicit dependencies and context, observable acceptance criteria, and a clean stopping point. Leave tasks `planned` until their inputs exist; mark only genuinely actionable tasks `ready`.
 
 Finish by running the GameFlow validator and giving the user a compact review of confirmed direction, unresolved risks, and the first recommended task.
+
+
+Confirm the boundary between approved direction and routine reversible production choices, engine/language restrictions, target performance/build environment, and Meshy generation allowances. Record authority in existing constraints and AUTOPILOT.md, and nonsecret generation defaults/recipes via meshy-config in `.gameflow/tools/meshy.json`. Complex mesh generation requires Meshy MCP; missing authority or availability blocks that work. Do not activate future providers or rigging/animation production. Once direction is approved, workers can make ordinary choices within it without repeating the interview.

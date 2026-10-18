@@ -1,16 +1,24 @@
 ---
 name: asset-pipeline
-description: Plan and execute traceable game-asset workflows across source tools and the engine using GameFlow asset specifications, provenance, import rules, and independent verification.
+description: Track source assets, Meshy deliveries, integration artifacts, and independent acceptance through GameFlow asset manifests and bounded task contracts.
 ---
 
 # Run a GameFlow asset pipeline
 
-Every asset needs a stable ID in `.gameflow/assets/manifest.json`, a source-of-truth file, intended engine destination, provenance/license, tool and version, dependencies, and technical plus artistic acceptance criteria. Store substantial briefs in `.gameflow/assets/specifications/` and references in `.gameflow/assets/references/`.
+Use stable asset IDs in `.gameflow/assets/manifest.json`. Preserve source authority, intended engine destination, provenance/license, tool version, dependencies and delivery criteria. Keep substantial briefs in `assets/specifications/` and durable references in `assets/references/`; screenshots are not source authority.
 
-Split production at recoverable boundaries such as specification, source creation, topology, UVs, materials/textures, rigging, animation, export, engine import, and verification. Combine stages only when one worker can finish them at a clean checkpoint and verify each output.
+Route every complex mesh creation through asset-generation and Meshy MCP. Explicit simple-shape exceptions may use local primitives. Existing assets may be integrated without regeneration. Meshy unavailable, unsupported, or out of allowance means the affected generation task is blocked, never a local modeling fallback. Future providers remain inactive until explicit policy changes.
 
-Record coordinate system, units, transforms, pivot, naming, material slots, texture channels, collision, skeleton, animation ranges, LODs, and export settings wherever applicable. Do not allow filenames to become the sole asset identity.
+Split work at recoverable generation, download, integration/export, engine-import, and independent-delivery-verification boundaries. Blender performs only noncreative integration, not creative repair. All rigging and animation production is deferred, including work offered by a currently connected provider. Keep such tasks visible as `deferred`, with reason and reactivation condition.
 
-Prefer Blender Python, Unreal Python/commandlets/editor scripting, GIMP batch procedures, or other deterministic application APIs. Use UI control for unsupported operations and capture the smallest possible verification set. Update the manifest at each durable boundary; never represent a temporary render or screenshot as the source asset.
+Record applicable units, axes, pivot, material/texture dependencies, format and import/export settings. Preserve generated originals and bind derived artifacts to them. Source replacement invalidates acceptance tied to earlier identities. Use blender-production and unreal-development only for permitted integration.
 
-Use the shared task lifecycle. Import completion moves to `verify`; technical and art-direction checks determine `done`.
+For Meshy outputs, verify cheap delivery checks independently: completed job, readable expected files, dependencies, intended import/loading, and recorded identity/provenance. Do not introduce artistic or numerical quality audits unless explicitly requested. Gameplay/build tasks retain their own tests. Implementation ends at `verify`, not `done`.
+
+Keep existing manifest fields. Optional generation evidence includes provider/model, job ID, effective config/recipe/task overrides, input references, output hashes, allowance reservation and usage, and rights evidence. Unknown rights stay unknown. Never store secrets or authenticated URLs.
+
+## Optional manual review
+
+After independent acceptance, enqueue each delivered asset revision and present the newest five unreviewed assets in a dedicated Blender scene. Read [optional-review.md](references/optional-review.md) for durable queue commands, safe presentation, migration, and feedback handling. Manual approval is optional and never gates production; explicit disapproval reopens the original task for interactive revision while preserving its accepted predecessor.
+
+Preserve task ownership and resumable exit state using the shared [checkpoint lifecycle](../task-orchestration/references/checkpoints.md); optional review state is checkpoint evidence, not an acceptance gate.
