@@ -2,7 +2,7 @@
 
 ## Durable state
 
-`AGENTS.md` is the entrypoint. It directs every new session to `.gameflow/PROJECT.md`, `.gameflow/CONSTRAINTS.md`, `.gameflow/sessions/CURRENT.md`, and `.gameflow/tasks/index.json`. The task graph and asset manifest are canonical machine-readable state. Markdown files explain intent and decisions.
+`AGENTS.md` is the entrypoint. It directs every new session to `.gameflow/PROJECT.md`, `.gameflow/CONSTRAINTS.md`, `.gameflow/sessions/CURRENT.md`, and a validated compact view of `.gameflow/tasks/index.json` from `scripts/resume_view.py --project PROJECT` (full index fallback only if the helper is unavailable). Read full selected/recovery records with `--task TASK-ID`; this view never replaces direction, constraints, handoff, or the project validator. The task graph and asset manifest are canonical machine-readable state. Markdown files explain intent and decisions.
 
 Never depend on a prior conversation to resume work. Before stopping, update the active task, task index, relevant decision or verification record, and `sessions/CURRENT.md`.
 
@@ -91,3 +91,5 @@ shared-state deltas and stop only the affected ambiguous action when attribution
 is unresolved. Historical projects can be reconciled into checkpoint metadata
 without discarding work or repeating already-paid jobs. See
 [autopilot](../skills/autopilot/SKILL.md) for the lifecycle protocol.
+
+Autopilot pushes verified commits and final bookkeeping once all tasks selected for its bounded run are complete, using the configured GitHub upstream after scope and fast-forward checks. Explicit no-push policy overrides this default. Incomplete runs retain local checkpoints; delivery does not wait for the entire game.

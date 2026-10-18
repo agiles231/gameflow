@@ -50,3 +50,7 @@ Meshy output needs independent cheap delivery verification only: completed job, 
 Skip `deferred` tasks and do not count them as completed cycles. Deferred tasks must have no dependents; combine rigging and animation into one deferred leaf per asset depending on its delivered static mesh. Rescope active contracts explicitly before removing edges, retaining durable rationale. Record reason and explicit reactivation condition; tool availability alone does not reactivate them. Deferred required work prevents claiming the game complete.
 
 On resume, reconcile live owners/jobs, accepted work awaiting commit, pending verification and partial implementation before selecting new work. Preserve checkpoint provenance and unrelated edits; an unchanged authorized checkpoint needs no renewed adoption permission. Record task commit hashes in final nonrecursive bookkeeping.
+
+## End-of-run Git delivery
+
+Allow local commits for independently verified tasks and one final push of completed run commits plus bookkeeping to the current branch’s configured GitHub upstream. Follow the autopilot Finish checks: every selected task must be accepted, done and committed with no unresolved run work. Unselected backlog does not block delivery. Honor explicit no-push overrides; no force pushes, arbitrary remotes, unrelated outgoing commits or pull requests. Record missing upstream, divergence or push failure and recovery without claiming delivery.

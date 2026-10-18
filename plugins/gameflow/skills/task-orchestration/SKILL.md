@@ -11,7 +11,7 @@ A task is sufficiently bounded when it has one principal durable deliverable, ex
 
 Use lifecycle states exactly: `planned`, `ready`, `executing`, `verify`, `done`, `blocked`, `deferred`. Implementation ends at `verify`. Only an acceptance pass moves work to `done`. Follow [the checkpoint protocol](references/checkpoints.md) for durable ownership, ordered recovery, acceptance revisions, amendments and commit state. This protocol also governs checkpoints returned by production/configuration skills; clearing an active worker never discards change provenance.
 
-Give a worker the task contract, the minimum required project constraints, and the files named by `Context`. Avoid sending the whole project history. Require a return packet containing changed artifacts, commands/actions taken, acceptance evidence, residual risks, and proposed child tasks.
+Give a worker the task contract, the minimum required project constraints, and the files named by `Context`. Use `fork_turns="none"` for fresh workers when supported, supplying context explicitly rather than inheriting conversation history. Include relevant user decisions and authority verbatim or by durable reference; do not reduce model quality or omit constraints. Reuse a worker only while its task context remains relevant. Require a return packet containing changed artifacts, commands/actions taken, acceptance evidence, residual risks, and proposed child tasks.
 
 Prevent concurrent ownership of the same files or engine assets. Unexpected scope becomes a child task; it does not silently enlarge the active task. Stop for user direction when an unknown creative or product choice would materially alter the result.
 

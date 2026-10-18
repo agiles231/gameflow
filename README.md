@@ -1,7 +1,7 @@
 # GameFlow marketplace
 
 GameFlow is a Codex plugin for durable game planning, Meshy-led static asset
-production, Unreal integration, and bounded autonomous work. Version 0.4.0
+production, Unreal integration, and bounded autonomous work. Version 0.5.0
 contains 14 skills. Plugin code stays outside game repositories; project state
 lives in .gameflow with a small AGENTS.md entrypoint.
 
@@ -50,7 +50,7 @@ serialized. Unknown charged jobs are reconciled, never blindly resubmitted.
 
 Recipes resolve operation defaults < selected recipe < explicit task overrides.
 The helper prints a dry-run request and validates against a captured schema;
-actual submission requires rediscovery and validation against the live MCP schema.
+actual submission requires a callable tool and validation against its current MCP schema. Schemas inspected in the same unchanged connection may be reused; reconnects, tool changes, schema errors or uncertain freshness require rediscovery.
 Install scripts/requirements.txt into the chosen Python environment for configured
 schema validation. Empty draft configs need only the standard library.
 
@@ -71,6 +71,7 @@ python3 tests/test_task_graph.py
 python3 tests/test_meshy_config.py
 python3 tests/test_checkpoints.py
 python3 tests/test_asset_review.py
+python3 tests/test_resume_view.py
 ```
 
 See [workflow](plugins/gameflow/docs/WORKFLOW.md),

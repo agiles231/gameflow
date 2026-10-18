@@ -10,9 +10,9 @@ Read, in order:
 1. `.gameflow/PROJECT.md`
 2. `.gameflow/CONSTRAINTS.md`
 3. `.gameflow/sessions/CURRENT.md`
-4. `.gameflow/tasks/index.json`
+4. The compact task view from the GameFlow plugin’s `scripts/resume_view.py --project PROJECT` (or `.gameflow/tasks/index.json` if the helper is unavailable). The helper validates the entire graph before filtering; resolve errors before work. Read each selected/recovery task’s full record with `--task TASK-ID` and its contract.
 
-Run the GameFlow validator. Resolve inconsistencies before production work.
+The compact view replaces only the full index dump; still read all three mandatory files above. It includes all unfinished tasks, dependency status, and completed tasks with pending commits, owners or unresolved jobs. Read other records by ID when referenced in the handoff or evidence. Run the GameFlow validator. Resolve inconsistencies before production work.
 
 Before new selection, follow [the checkpoint recovery protocol](../task-orchestration/references/checkpoints.md): reconcile live ownership and jobs, accepted-but-uncommitted work, pending verification, partial implementation, and resolved blockers. Capture the inherited baseline before any bookkeeping writes. Recognized unchanged checkpoints resume under existing authority without another adoption question. Then select a `ready` task whose dependencies are all `done`. If none exists, determine whether a `planned` task has satisfied prerequisites and can become `ready`, or report the concrete blocker. Read its contract, then load only the files or sections listed under Context. Do not load temporary verification images or unrelated project history.
 

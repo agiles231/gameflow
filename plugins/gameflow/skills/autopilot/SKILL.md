@@ -5,7 +5,7 @@ description: Autonomously advance a GameFlow project through ready tasks, implem
 
 # Run GameFlow autonomously
 
-Advance the project without routine human confirmation. This command authorizes ordinary project-local implementation, testing, application automation, verification, task-state updates, creation of necessary child tasks, and local Git commits for verified tasks. It does not authorize pushes, pull requests, purchases, publishing, credential changes, destructive loss of user work, external communications, or invention of unresolved creative direction.
+Advance the project without routine human confirmation. This command authorizes ordinary project-local implementation, testing, application automation, verification, task-state updates, creation of necessary child tasks, and local Git commits for verified tasks. It also authorizes one end-of-run push of verified run commits and final bookkeeping to the configured GitHub upstream under the Finish rules, unless the user or project explicitly prohibits pushing. It does not authorize pull requests, purchases, publishing, credential changes, destructive loss of user work, external communications, or invention of unresolved creative direction.
 
 ## Start
 
@@ -13,7 +13,7 @@ Read the normal GameFlow resume files and `.gameflow/AUTOPILOT.md` when present.
 
 Inspect Git HEAD and staged, unstaged, and untracked changes before any run writes. Follow [the checkpoint protocol](../task-orchestration/references/checkpoints.md): classify inherited work as recognized task checkpoints, unrelated edits, or ambiguous changes. Resume recognized checkpoints under existing authority without renewed permission; preserve unrelated edits. Reconcile mixed ownership before touching affected changes, using prior evidence and explicit continuation authority when available. Only unresolved ownership or authority requires a question. A dirty tree alone is not a stop condition.
 
-Use the limits in `AUTOPILOT.md`. If it is absent, default to at most three completed task cycles, 90 minutes elapsed time, and one repair attempt per failed acceptance criterion. Always leave enough time to write a clean checkpoint. A scheduled run must stop before it could overlap the next scheduled run.
+Record the tasks selected for this bounded run in the handoff, including recovered work and any required child/repair tasks added during execution. Do not remove unfinished selections to declare success. Completion of this run is distinct from completion of the entire game. Use the limits in `AUTOPILOT.md`. If it is absent, default to at most three completed task cycles, 90 minutes elapsed time, and one repair attempt per failed acceptance criterion. Always leave enough time to write a clean checkpoint. A scheduled run must stop before it could overlap the next scheduled run.
 
 ## Loop
 
@@ -30,7 +30,7 @@ Repeat while within limits. Tasks with `execution_mode: interactive` are held fo
    - Inspect the staged diff, run an appropriate staged-diff sanity check, and confirm no unrelated or secret material is included.
    - Commit with `TASK-ID: imperative summary`, using the actual task ID. Include repairs in the same task commit.
    - Record the commit hash in the task completion evidence and handoff. If recording the hash changes tracked files, include that linkage in the final run bookkeeping commit; do not amend automatically or create an empty recursive commit solely to record its own hash.
-   - Do not push or create a pull request unless the user separately authorizes it.
+   - Defer pushing to Finish after every selected run task has passed independent acceptance and its commit is reconciled. Pull requests still require separate authorization.
    - If no task changes remain, inspect Git for an already-created matching commit and recover its hash. If no matching commit exists, or staging or committing fails, record pending/failed commit state and the exact recovery action. Do not mark the checkpoint as successfully committed and do not advance to another task.
 7. On verification failure, return the task to `executing`, make one bounded repair attempt when allowed, then verify again. Do not loop indefinitely on the same failure.
 8. After a successful task commit, select the next ready task.
@@ -46,6 +46,10 @@ Do not mark the game complete merely because the current milestone or queue is e
 ## Finish
 
 Write an adoptable checkpoint for unfinished work, retaining job identities, authority, hashes, and repair counts. Validate GameFlow state and update `.gameflow/sessions/CURRENT.md` with tasks completed, verification results, task commit hashes, any deliberately uncommitted baseline changes, remaining ready work, blockers, decisions required, limits consumed, and the next action. Commit final run-only bookkeeping with a clearly labeled GameFlow bookkeeping commit only if those changes are not already included in the last task commit; never mix them into unrelated user changes.
+
+After final bookkeeping, push once when every selected run task is independently accepted, `done`, and committed, and no selected task, live worker/job, verification, ownership or commit recovery remains unresolved. A limit reached between completed task cycles may qualify; unfinished selected work does not. Other unselected backlog tasks do not require waiting for the entire game. Honor explicit no-push policy.
+
+Use only the current branch’s configured GitHub upstream; never create an arbitrary remote, force-push, or push other refs. Fetch that upstream, confirm a fast-forward update is possible, and review the exact outgoing commits/diff for scope and secrets, including inherited commits. Do not include unrelated inherited commits without existing authority. Push the explicit current-branch-to-upstream-branch refspec. Proven unrelated uncommitted baseline edits alone do not prevent a push. If upstream is missing/non-GitHub, history diverged, scope is uncertain, or push fails, preserve local commits, record the exact blocker/recovery action, and report delivery as pending; do not rewrite history or retry blindly. Record the intended remote/ref and commit range before pushing and verify remote branch identity afterward. Report the confirmed pushed hash; a local post-push receipt may remain for next bookkeeping (do not create recursive commits/pushes merely to record the push itself).
 
 Scheduled runs should remain quiet during routine progress. Notify the user only on game completion, a blocker, a failed run, a required decision/authorization, or an inconsistent state that needs attention.
 
