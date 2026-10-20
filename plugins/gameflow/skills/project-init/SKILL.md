@@ -14,4 +14,4 @@ The plugin remains installed outside the game repository. Only `.gameflow/` and 
 For an audit request, run validation without initialization. Report structural errors separately from temporary-artifact warnings.
 
 
-For CLI setup, keep plugin code outside the game, reuse configured MCP servers, and follow the repository README for host-specific install commands. Use tool-discovery when application work is selected. Existing projects do not require reinitialization or a schema migration; discuss optional policy additions without replacing established settings.
+For CLI setup, keep plugin code outside the game, reuse configured MCP servers, and follow the repository README for host-specific install commands. Use tool-discovery when application work is selected. Existing schema-v1 projects remain valid without an upgrade; do not replace established settings. For an explicit tooling upgrade, read [migration instructions](../../docs/MIGRATION.md), preview `scripts/migrate_gameflow.py --project PROJECT`, then use `--apply` within the authorized upgrade scope. Report unresolved authored-guidance follow-ups separately. Never run migration automatically on resume.

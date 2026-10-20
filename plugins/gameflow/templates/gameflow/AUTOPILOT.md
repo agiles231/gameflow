@@ -31,7 +31,10 @@ The game is complete only when every completion criterion in `PROJECT.md` has du
 ## Workers and production choices
 
 - Allow bounded subagent delegation when the runtime supports it.
-- Coordinator alone updates shared workflow state; serialize shared application mutations.
+- Schedule all independent eligible tasks concurrently up to available runtime worker slots; honor any explicit project worker cap. Refill slots as results arrive, with capacity for distinct verification.
+- Count completed cycles plus selected unfinished tasks against the task-cycle limit; repairs and verification use their existing task reservation.
+- Pending provider jobs retain reservations without occupying idle agents; reconcile and track them while disjoint work proceeds.
+- Coordinator alone updates shared workflow state, reserves/submits paid work, stages and commits; serialize shared application mutations. Keep other live task artifacts out of each task commit.
 - Accept work only through a distinct verifier; otherwise leave it at verify.
 - Allow reversible production choices within the approved brief. Ask about material direction changes.
 

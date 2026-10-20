@@ -1,6 +1,6 @@
 {
   "name": "gameflow",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A durable, task-oriented game development workflow for Codex, Unreal Engine, Blender, and visual production tools.",
   "author": {
     "name": "Andrew"
@@ -27,7 +27,8 @@
       "Independent delivery acceptance",
       "Unreal integration and bounded CLI delegation",
       "Optional revision-bound Blender review",
-      "Recoverable checkpoints and commit reconciliation"
+      "Recoverable checkpoints and commit reconciliation",
+      "Concurrent independent task scheduling"
     ],
     "defaultPrompt": [
       "Initialize GameFlow in this game project.",

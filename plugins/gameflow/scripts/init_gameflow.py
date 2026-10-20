@@ -9,9 +9,8 @@ import shutil
 import sys
 from pathlib import Path
 
-
-START = "<!-- gameflow:start -->"
-END = "<!-- gameflow:end -->"
+from managed_guidance import render, replace_checked
+from task_contract import render_contract
 
 
 def copy_templates(source: Path, destination: Path, replacements: dict[str, str]) -> None:
@@ -36,15 +35,10 @@ def copy_templates(source: Path, destination: Path, replacements: dict[str, str]
 
 def update_agents(project: Path, block_path: Path) -> None:
     agents = project / "AGENTS.md"
-    block = block_path.read_text(encoding="utf-8").strip()
-    existing = agents.read_text(encoding="utf-8") if agents.exists() else ""
-    if START in existing and END in existing:
-        prefix, rest = existing.split(START, 1)
-        _, suffix = rest.split(END, 1)
-        updated = prefix.rstrip() + "\n\n" + block + suffix
-    else:
-        updated = existing.rstrip() + ("\n\n" if existing.strip() else "") + block + "\n"
-    agents.write_text(updated, encoding="utf-8", newline="\n")
+    existing = agents.read_bytes() if agents.exists() else None
+    updated = render(existing or b"", block_path.read_bytes())
+    if updated != existing:
+        replace_checked(agents, existing, updated)
 
 
 def main() -> int:
@@ -63,6 +57,14 @@ def main() -> int:
     if not template.is_dir():
         raise RuntimeError(f"missing template directory: {template}")
 
+    # Validate managed markers before creating any project state.
+    agents = project / "AGENTS.md"
+    if agents.is_symlink():
+        parser.error("refusing symlink AGENTS.md")
+    try:
+        render(agents.read_bytes() if agents.exists() else b"", (plugin / "templates/AGENTS.block.md").read_bytes())
+    except ValueError as exc:
+        parser.error(str(exc))
     destination = project / ".gameflow"
     copy_templates(
         template,
@@ -73,6 +75,9 @@ def main() -> int:
             "DATE": dt.date.today().isoformat(),
         },
     )
+    first_contract = destination / "tasks/TASK-0001.md"
+    if not first_contract.exists():
+        first_contract.write_text(render_contract("TASK-0001", "Define the first vertical slice", discovery=True), encoding="utf-8")
     update_agents(project, plugin / "templates" / "AGENTS.block.md")
     print(f"Initialized GameFlow at {destination}")
     print("Existing project-state files were preserved.")

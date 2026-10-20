@@ -2,7 +2,7 @@
 
 ## Durable state
 
-`AGENTS.md` is the entrypoint. It directs every new session to `.gameflow/PROJECT.md`, `.gameflow/CONSTRAINTS.md`, `.gameflow/sessions/CURRENT.md`, and a validated compact view of `.gameflow/tasks/index.json` from `scripts/resume_view.py --project PROJECT` (full index fallback only if the helper is unavailable). Read full selected/recovery records with `--task TASK-ID`; this view never replaces direction, constraints, handoff, or the project validator. The task graph and asset manifest are canonical machine-readable state. Markdown files explain intent and decisions.
+The managed GameFlow block in `AGENTS.md` owns the project bootstrap sequence. Follow it rather than copying its procedure into handoffs or skills. `scripts/resume_view.py` supplies the compact graph and full selected/recovery records; it does not establish authority or replace project validation. The task graph and asset manifest are canonical machine-readable state. Markdown files explain intent and decisions.
 
 Never depend on a prior conversation to resume work. Before stopping, update the active task, task index, relevant decision or verification record, and `sessions/CURRENT.md`.
 
@@ -22,7 +22,9 @@ Workers do not expand scope. Unexpected work becomes a child task. Implementatio
 
 ## Context packets
 
-Every task lists `context.required` and `context.excluded`. Load the project entrypoint plus only the required references. A worker completion report contains changed artifacts, commands, acceptance evidence, residual risks, and proposed follow-ups; it does not reproduce its full working context.
+Markdown task contracts own context; task-index JSON does not duplicate it. New contracts use `## Context` with `### Required` Markdown links and descriptive `### Excluded` guidance. Required links are project-root-relative local paths, optionally with conventional Markdown heading fragments; percent-encode spaces. Do not use absolute paths, URLs, parent traversal, or links escaping through symlinks. List one link per bullet; additional prose is preserved as unparsed context for direct reading.
+
+After selection, run `scripts/task_context.py --project PROJECT --task TASK-ID`. It validates the graph and returns the selected record, bootstrap references, dependency statuses, recovery reasons, required references and warnings without concatenating files or following links recursively. Missing files/headings and invalid paths return a nonzero status. Legacy prose remains valid and is returned for direct reading; the helper does not infer or omit requirements. An incomplete context packet never establishes readiness. Load the contract and only the applicable references. A worker completion report contains changed artifacts, commands, acceptance evidence, residual risks, and proposed follow-ups; it does not reproduce its full working context.
 
 ## Visual observations
 
@@ -42,6 +44,10 @@ Meshy MCP for every complex mesh within configured allowance. Local creation is 
 Skills operate inside Codex sessions, not a background service. The coordinator is
 the single writer of shared task/asset/handoff state and owns application leases
 recorded in task contracts. Workers report proposed transitions and evidence.
+Autopilot schedules independent eligible tasks concurrently within runtime slots,
+project limits and reserved task cycles, refilling as each phase finishes. Tracked
+provider jobs may overlap while coordinator submissions, shared application
+mutations and Git commits remain serialized. Workers never stage or commit.
 Only a distinct verifier can accept frozen artifacts. Preserve IDs and optional
 worker/provenance metadata for future UI readers without a new task database.
 
@@ -93,3 +99,8 @@ without discarding work or repeating already-paid jobs. See
 [autopilot](../skills/autopilot/SKILL.md) for the lifecycle protocol.
 
 Autopilot pushes verified commits and final bookkeeping once all tasks selected for its bounded run are complete, using the configured GitHub upstream after scope and fast-forward checks. Explicit no-push policy overrides this default. Incomplete runs retain local checkpoints; delivery does not wait for the entire game.
+
+
+## Guidance upgrades
+
+Fresh initialization uses the current shared contract and handoff templates. Existing projects remain schema-v1 compatible. Tooling migration is explicit and preserves authored state; see [migration](MIGRATION.md) when upgrading a project. Handoffs retain current facts and evidence identities, not copied workflow procedures or conversation history.

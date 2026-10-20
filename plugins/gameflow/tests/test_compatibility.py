@@ -74,6 +74,13 @@ def main() -> int:
             assert actual_suffix == suffix, "Authored AGENTS suffix changed"
             run("validate_gameflow.py", project)
 
+        # Migration preserves independently authored v1 state, not just current templates.
+        run("migrate_gameflow.py", project)
+        run("migrate_gameflow.py", project, "--apply")
+        for relative, original in before.items():
+            assert (flow / relative).read_bytes() == original, f"Migration changed legacy state: {relative}"
+        run("validate_gameflow.py", project)
+
     print("GameFlow v1 compatibility tests passed.")
     return 0
 

@@ -64,6 +64,11 @@ never imply acceptance. Without commit authority, leave an adoptable record.
 4. Continue verification of unchanged outputs; resume partial implementation.
 5. Reassess resolved blockers, then select ready work with satisfied prerequisites.
 
+This is reconciliation priority, not a whole-run barrier: retain healthy live
+workers/jobs and let disjoint work progress after their ownership and identities
+are understood. Dependencies and conflicting resources still wait. Follow
+[concurrent scheduling](concurrent-scheduling.md) for admission and commit isolation.
+
 Run `scripts/checkpoint_preflight.py --project PATH` for file/acceptance/commit
 identity checks of pending work. Historical committed tasks are not scanned against
 today’s files; use `--task TASK-ID` only for targeted investigation or before

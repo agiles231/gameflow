@@ -1,7 +1,7 @@
 # GameFlow marketplace
 
 GameFlow is a Codex plugin for durable game planning, Meshy-led static asset
-production, Unreal integration, and bounded autonomous work. Version 0.5.0
+production, Unreal integration, and bounded autonomous work. Version 0.6.0
 contains 14 skills. Plugin code stays outside game repositories; project state
 lives in .gameflow with a small AGENTS.md entrypoint.
 
@@ -42,7 +42,11 @@ the asset task for interactive revision. A dedicated review scene preserves sour
 assets and user-owned editor work.
 
 Autopilot reconciles pending checkpoints and accepted-but-uncommitted tasks before
-selecting new work. Recorded task ownership and artifact identities distinguish
+selecting new work. It fills available worker slots with independent eligible tasks,
+refills them as results arrive, and reserves task-cycle capacity across active work.
+Pending provider jobs can overlap without occupying idle agents. Dependencies wait
+for accepted, committed prerequisites; coordinator-only Git commits remain serialized.
+Recorded task ownership and artifact identities distinguish
 resumable changes from unrelated baseline edits.
 
 One coordinator owns shared state and paid-job reservations; shared editors are
@@ -72,9 +76,24 @@ python3 tests/test_meshy_config.py
 python3 tests/test_checkpoints.py
 python3 tests/test_asset_review.py
 python3 tests/test_resume_view.py
+python3 tests/test_task_context.py
+python3 tests/test_migration.py
 ```
 
 See [workflow](plugins/gameflow/docs/WORKFLOW.md),
 [GameFlow glossary](plugins/gameflow/docs/GLOSSARY.md), and
 [validation coverage](plugins/gameflow/docs/VALIDATION.md). No live paid generation
 is required by tests, installation, or configuration.
+
+## Version 0.6.0: context and upgrades
+
+Task context stays in Markdown contracts. The new `scripts/task_context.py`
+command returns compact references and recovery information, with direct-reading
+fallback for legacy prose. New tasks share one contract template; handoffs contain
+current state instead of duplicated resume procedures.
+
+Existing schema-v1 projects remain usable without migration. Refresh the plugin,
+start a fresh session, and follow the [explicit migration guide](plugins/gameflow/docs/MIGRATION.md)
+to preview and apply managed guidance updates. Migration preserves authored state
+and reports remaining manual reconciliation. No automatic resume-time upgrade,
+agent benchmark, or token-savings claim is included.

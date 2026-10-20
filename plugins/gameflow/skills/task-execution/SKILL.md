@@ -9,9 +9,9 @@ For new work confirm that the selected task is `ready`, its dependencies are `do
 
 For inherited executing/verify or accepted-but-uncommitted work, recover its existing phase using [the checkpoint protocol](../task-orchestration/references/checkpoints.md); do not reset it to ready or reimplement unchanged accepted work.
 
-Read only the task contract, project constraints relevant to it, and its required context. Use tool-discovery to select supported native CLI, MCP, or application scripting operations for the deliverable. Use desktop UI interaction only when no reliable programmable path exists.
+Follow the project’s managed `AGENTS.md` bootstrap. After selection, run `scripts/task_context.py --project PROJECT --task TASK-ID`, then read the task contract and required references. Read legacy or unparsed Context directly; do not treat the packet as readiness or authority. Use tool-discovery to select supported native CLI, MCP, or application scripting operations for the deliverable. Use desktop UI interaction only when no reliable programmable path exists.
 
-Keep changes within the contract. Create a child task for discovered work outside scope. Preserve user-authored and unrelated changes.
+When delegated, honor assigned paths and application leases, return proposed shared-state changes to the coordinator, and never stage or commit. Request a resource lease before an application mutation; do independent preparation while it is unavailable. Keep changes within the contract. Create a child task for discovered work outside scope. Preserve user-authored and unrelated changes.
 
 At the checkpoint, return evidence to the coordinator to update the contract's completion evidence with changed artifacts, commands or application actions, versions where relevant, and known risks. If implementation is complete, move the task to `verify`, clear inactive transient ownership while retaining durable checkpoint provenance, and update the session handoff. Do not self-certify it as `done`. If blocked, record the exact unmet input or decision and the safe partial state.
 

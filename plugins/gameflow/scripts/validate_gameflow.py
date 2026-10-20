@@ -137,11 +137,8 @@ def validate_task_graph(index, flow: Path, errors: list[str]) -> None:
             errors.append(f"task graph contains a {label} cycle")
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--project", type=Path, required=True)
-    args = parser.parse_args()
-    root = args.project.resolve()
+def validate_project(root: Path, require_entrypoint: bool = True):
+    root = root.resolve()
     flow = root / ".gameflow"
     errors: list[str] = []
     warnings: list[str] = []
@@ -153,7 +150,7 @@ def main() -> int:
             errors.append(f"missing .gameflow/{relative}")
 
     agents = root / "AGENTS.md"
-    if not agents.is_file() or "<!-- gameflow:start -->" not in agents.read_text(encoding="utf-8"):
+    if require_entrypoint and (not agents.is_file() or "<!-- gameflow:start -->" not in agents.read_text(encoding="utf-8")):
         errors.append("AGENTS.md does not contain the GameFlow entrypoint")
 
     index_path = flow / "tasks" / "index.json"
@@ -184,6 +181,15 @@ def main() -> int:
         retained = [p for p in temporary.iterdir() if p.name != ".gitignore"]
         if retained:
             warnings.append(f"temporary verification directory contains {len(retained)} item(s)")
+
+    return errors, warnings
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--project", type=Path, required=True)
+    args = parser.parse_args()
+    errors, warnings = validate_project(args.project)
 
     for warning in warnings:
         print(f"WARNING: {warning}")

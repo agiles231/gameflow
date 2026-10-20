@@ -5,16 +5,11 @@ description: Resume work in a GameFlow game project from durable state without r
 
 # Resume a GameFlow session
 
-Read, in order:
+Follow the bootstrap procedure in the project's managed GameFlow block in `AGENTS.md`. It owns the reading sequence; do not substitute historical handoff instructions. Run the GameFlow validator and resolve inconsistencies before production work. The compact view never establishes authority, worker liveness, acceptance, or commit verification. Read full selected/recovery records and their contracts.
 
-1. `.gameflow/PROJECT.md`
-2. `.gameflow/CONSTRAINTS.md`
-3. `.gameflow/sessions/CURRENT.md`
-4. The compact task view from the GameFlow plugin’s `scripts/resume_view.py --project PROJECT` (or `.gameflow/tasks/index.json` if the helper is unavailable). The helper validates the entire graph before filtering; resolve errors before work. Read each selected/recovery task’s full record with `--task TASK-ID` and its contract.
+Resume is read-only with respect to tooling upgrades: do not run migration automatically. For an explicit upgrade request, use the project-init skill's migration procedure.
 
-The compact view replaces only the full index dump; still read all three mandatory files above. It includes all unfinished tasks, dependency status, and completed tasks with pending commits, owners or unresolved jobs. Read other records by ID when referenced in the handoff or evidence. Run the GameFlow validator. Resolve inconsistencies before production work.
-
-Before new selection, follow [the checkpoint recovery protocol](../task-orchestration/references/checkpoints.md): reconcile live ownership and jobs, accepted-but-uncommitted work, pending verification, partial implementation, and resolved blockers. Capture the inherited baseline before any bookkeeping writes. Recognized unchanged checkpoints resume under existing authority without another adoption question. Then select a `ready` task whose dependencies are all `done`. If none exists, determine whether a `planned` task has satisfied prerequisites and can become `ready`, or report the concrete blocker. Read its contract, then load only the files or sections listed under Context. Do not load temporary verification images or unrelated project history.
+Before new selection, follow [the checkpoint recovery protocol](../task-orchestration/references/checkpoints.md): reconcile live ownership and jobs, accepted-but-uncommitted work, pending verification, partial implementation, and resolved blockers. Capture the inherited baseline before any bookkeeping writes. Recognized unchanged checkpoints resume under existing authority without another adoption question. Then select a `ready` task whose dependencies are all `done`. If none exists, determine whether a `planned` task has satisfied prerequisites and can become `ready`, or report the concrete blocker. Run `scripts/task_context.py --project PROJECT --task TASK-ID`, read its contract, then load the required files or sections. Read legacy or unparsed context directly; a packet never replaces the contract. Do not load temporary verification images or unrelated project history.
 
 Before ending, update the task state and `.gameflow/sessions/CURRENT.md`. The handoff must state the active milestone, completed changes, next recommended task, exact blockers, verification status, and any uncommitted or externally held state needed to resume.
 

@@ -1,5 +1,8 @@
 # Version 0.4.0 validation
 
+This document retains historical coverage below. Current release additions are
+recorded in the versioned sections.
+
 - Workflow initialization/task-allocation smoke and v1 preservation tests pass.
 - Task graph tests cover deferred leaves, dependencies, parents, cycles, IDs,
   malformed inputs and path confinement (35 cases).
@@ -32,3 +35,33 @@ Presentation uses discovered application tools at delivery time and records the
 actual result; unavailable or user-owned Blender is a deferred presentation,
 not an acceptance failure. Lifecycle preflight does not prove worker liveness,
 user authority or ownership of shared-file edits; the coordinator reconciles them.
+
+## Version 0.5.1 concurrent scheduling
+
+- The changed autopilot, orchestration and task-execution skills pass the skill
+  validator; workflow, v1 compatibility, task graph (35 cases), checkpoint and
+  resume-view regression suites pass.
+- Independent scenario review covers slot filling, task-cycle reservations,
+  dependent-task gating, slow provider jobs, verifier independence, shared-editor
+  leases and task commit isolation. It corrected reservation-cap stopping and
+  worker reuse when the runtime cannot release inactive agents.
+- This is an instruction-driven scheduler inside the current Codex session.
+  No background runner or automated scheduler is installed. These checks do not
+  establish live parallel provider/editor operation or change spending authority.
+
+## Version 0.6.0 context and migration
+
+- Context fixtures cover shared contract generation, compact read-only packets,
+  heading references, legacy and unparsed prose, missing references, path/symlink
+  escapes, recovery visibility and full-graph validation before selection.
+- Migration fixtures cover read-only preview, apply/no-op behavior, malformed
+  markers, byte preservation including CRLF and Unicode, backups, source changes,
+  tampered backups, structural failures and hash-guarded rollback.
+- Independently constructed schema-v1 fixtures retain authored Markdown, unknown
+  JSON metadata, task ownership and custom binary assets across initialization
+  and migration. Existing checkpoint and provider-related regression suites pass.
+- Workflow, compatibility, task graph, Meshy configuration, checkpoint, asset
+  review, resume view, task context and migration suites pass. Skill entrypoints
+  and local Markdown references are validated separately.
+- No external game project was migrated. These are ordinary regression checks;
+  no agent benchmark, quality evaluation, or token-savings measurement was run.

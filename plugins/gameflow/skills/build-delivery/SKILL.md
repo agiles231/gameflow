@@ -16,7 +16,7 @@ Select validation from the change and task acceptance:
 - Native/gameplay changes: compile the required target, execute relevant automated tests, and exercise the changed runtime behavior. An editor compile alone does not establish a packaged build.
 - Content/import changes: validate asset loading, references, applicable data validation, and representative in-engine behavior. Cook the relevant content when package compatibility is part of acceptance.
 - Performance work: read [references/performance-and-packaging.md](references/performance-and-packaging.md) to capture comparable baseline and candidate measurements.
-- Delivery: package the requested platform/configuration to an isolated output directory, then smoke-test the artifact when the environment supports execution.
+- Delivery: read [references/performance-and-packaging.md](references/performance-and-packaging.md), package the requested platform/configuration to an isolated output directory, then smoke-test the artifact when the environment supports execution.
 
 Record exact commands or tool operations, engine version, source revision plus dirty-state note, target/platform/configuration, result codes, logs, test reports and artifact paths. For timed-out or interrupted work, inspect process/job state before rerunning; do not start duplicate cooks. An accepted asynchronous request or a log line containing “success” is not proof of final process success.
 

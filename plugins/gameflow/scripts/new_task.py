@@ -8,6 +8,8 @@ import json
 import sys
 from pathlib import Path
 
+from task_contract import render_contract
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -30,34 +32,7 @@ def main() -> int:
         parser.error(f"unknown parent: {args.parent}")
 
     contract = f"tasks/{task_id}.md"
-    body = f"""# {task_id} — {args.title}
-
-## Outcome
-
-Define one principal deliverable.
-
-## Inputs
-
-- Define required inputs.
-
-## Outputs
-
-- Define durable outputs.
-
-## Acceptance
-
-- Define an observable pass/fail condition.
-
-## Context
-
-Required: list exact files or sections.
-
-Excluded: list nearby context that is not needed.
-
-## Completion evidence
-
-Not yet completed.
-"""
+    body = render_contract(task_id, args.title)
     (flow / contract).write_text(body, encoding="utf-8", newline="\n")
     data["tasks"].append({
         "id": task_id, "title": args.title, "status": "planned",
