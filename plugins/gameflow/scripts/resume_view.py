@@ -33,7 +33,7 @@ def compact(index):
         if task['status'] == 'done' and not recovery:
             continue
         row = {key: task[key] for key in ('id', 'title', 'status', 'contract', 'parent',
-                                         'execution_mode', 'priority') if key in task}
+                                         'execution_mode', 'priority', 'epic', 'kind', 'experiment_outcome', 'disposition') if key in task}
         row['dependencies'] = {dep: by_id[dep]['status'] for dep in task['depends_on']}
         row['recovery'] = recovery
         rows.append(row)

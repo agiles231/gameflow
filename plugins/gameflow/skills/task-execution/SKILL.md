@@ -23,3 +23,7 @@ Record preexisting dirty files and affected source identities before work. Keep 
 All rigging and animation work is deferred. Do not execute or reactivate deferred tasks automatically. Future providers stay inactive. For Meshy deliveries, use cheap independent delivery checks only unless deeper review is explicitly requested; this does not reduce gameplay/build testing.
 
 Before every exit, the coordinator records the versioned checkpoint, including authorized scope, artifact identities, jobs, repair counts and next action. This applies even to incomplete or uncommitted work. Git cleanliness does not establish acceptance.
+
+## Planning and retention
+
+Follow [planning](../../docs/PLANNING.md) and [artifact retention](../../docs/ARTIFACT_RETENTION.md). Respect project-authored overrides. Keep detailed verification and experiment payloads local-only, with compact revision-bound conclusions in tracked contracts. Do not infer acceptance from task migration or missing local evidence.

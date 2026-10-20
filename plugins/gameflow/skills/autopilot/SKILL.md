@@ -66,3 +66,7 @@ Use asset-generation for paid providers. A connected account does not grant spen
 All complex mesh generation uses Meshy MCP with `.gameflow/tools/meshy.json` resolved through meshy-config: project defaults, selected recipe, then task overrides. Only explicit simple-shape tasks may create meshes locally. Blender performs noncreative integration only. Missing Meshy capability/allowance blocks generation; no provider, script, UI or local-modeling fallback. Future providers never autoactivate. All rigging and animation production is `deferred`; skip it; deferred tasks must have no dependents, and rigging/animation should be one combined deferred leaf per asset depending on the delivered static mesh. Resume only after explicit user direction revises the policy. Deferred tasks cannot count as complete.
 
 Use independent cheap delivery acceptance for Meshy assets. Do not start artistic or numerical quality audits, render batches, creative repair or unrequested variations. Preserve ordinary gameplay/build validation. Reconcile inherited criteria with the approved scope durably before execution rather than silently accepting them.
+
+## Planning and retention
+
+Follow [planning](../../docs/PLANNING.md) and [artifact retention](../../docs/ARTIFACT_RETENTION.md). Respect project-authored overrides. Keep detailed verification and experiment payloads local-only, with compact revision-bound conclusions in tracked contracts. Do not infer acceptance from task migration or missing local evidence.

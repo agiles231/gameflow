@@ -11,6 +11,7 @@ from pathlib import Path
 
 from checkpoint_preflight import validate_checkpoint
 from asset_review import validate as validate_manual_review
+from planning import validate as validate_planning
 
 
 TASK_ID = re.compile(r"^TASK-\d{4,}$")
@@ -31,7 +32,7 @@ def load_json(path: Path, errors: list[str]):
         return None
 
 
-def validate_task_graph(index, flow: Path, errors: list[str]) -> None:
+def validate_task_graph(index, flow: Path, errors: list[str], check_planning=True) -> None:
     if not isinstance(index, dict):
         errors.append("tasks/index.json must be an object")
         return
@@ -56,6 +57,12 @@ def validate_task_graph(index, flow: Path, errors: list[str]) -> None:
             errors.append(f"{label}.execution_mode must be autonomous or interactive")
         for issue in validate_checkpoint(task):
             errors.append(f"{label}: {issue}")
+        if task.get('kind', 'delivery') not in ('delivery', 'experiment'):
+            errors.append(f"{label}.kind must be delivery or experiment")
+        if task.get('kind') == 'experiment' and task.get('experiment_outcome') not in ('pending', 'adopted', 'rejected', 'superseded', 'inconclusive'):
+            errors.append(f"{label}.experiment_outcome is missing or invalid")
+        if task.get('kind', 'delivery') != 'experiment' and 'experiment_outcome' in task:
+            errors.append(f"{label}.experiment_outcome requires kind experiment")
         status = task.get("status")
         if not isinstance(status, str) or status not in STATES:
             errors.append(f"{label}.status is invalid")
@@ -136,6 +143,18 @@ def validate_task_graph(index, flow: Path, errors: list[str]) -> None:
         if visited != len(graph):
             errors.append(f"task graph contains a {label} cycle")
 
+
+    if check_planning:
+        planning_path = flow / 'planning.json'
+        if planning_path.is_file():
+            planning = load_json(planning_path, errors)
+            if planning is not None and index is not None and not errors:
+                try:
+                    validate_planning(index, planning, flow.parent)
+                except (ValueError, KeyError, TypeError, AttributeError) as exc:
+                    errors.append(f"planning.json: {exc}")
+        elif isinstance(index, dict) and any(isinstance(t, dict) and t.get('epic') is not None for t in index.get('tasks', [])):
+            errors.append('Task epic assignments require planning.json')
 
 def validate_project(root: Path, require_entrypoint: bool = True):
     root = root.resolve()

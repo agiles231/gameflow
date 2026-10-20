@@ -22,3 +22,7 @@ Keep existing manifest fields. Optional generation evidence includes provider/mo
 After independent acceptance, enqueue each delivered asset revision and present the newest five unreviewed assets in a dedicated Blender scene. Read [optional-review.md](references/optional-review.md) for durable queue commands, safe presentation, migration, and feedback handling. Manual approval is optional and never gates production; explicit disapproval reopens the original task for interactive revision while preserving its accepted predecessor.
 
 Preserve task ownership and resumable exit state using the shared [checkpoint lifecycle](../task-orchestration/references/checkpoints.md); optional review state is checkpoint evidence, not an acceptance gate.
+
+## Planning and retention
+
+Follow [planning](../../docs/PLANNING.md) and [artifact retention](../../docs/ARTIFACT_RETENTION.md). Respect project-authored overrides. Keep detailed verification and experiment payloads local-only, with compact revision-bound conclusions in tracked contracts. Do not infer acceptance from task migration or missing local evidence.

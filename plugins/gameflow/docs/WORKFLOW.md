@@ -30,7 +30,7 @@ After selection, run `scripts/task_context.py --project PROJECT --task TASK-ID`.
 
 Approved references and final artifacts are durable. Screenshots, viewport captures, and intermediate renders are observations. Put observations in `.gameflow/verification/temporary/`, inspect them in a narrow context, write conclusions to a result JSON file, then remove them. Never place temporary observations in task descriptions or session handoffs.
 
-Verification results record the task, artifact hashes or revisions, application versions, view/camera configuration, checks, outcome, and durable evidence paths.
+Detailed verification results are local-only under `.gameflow/verification/`. Track compact acceptance notes in contracts: criteria, outcome, checked hashes/revisions and reproduction commands. Reports record task, identity, tool versions, camera configuration and checks. See [retention](ARTIFACT_RETENTION.md); project policy overrides defaults.
 
 ## Capability-based automation
 
@@ -104,3 +104,7 @@ Autopilot pushes verified commits and final bookkeeping once all tasks selected 
 ## Guidance upgrades
 
 Fresh initialization uses the current shared contract and handoff templates. Existing projects remain schema-v1 compatible. Tooling migration is explicit and preserves authored state; see [migration](MIGRATION.md) when upgrading a project. Handoffs retain current facts and evidence identities, not copied workflow procedures or conversation history.
+
+## Milestones, epics and experiments
+
+See [planning](PLANNING.md). Optional planning metadata extends the canonical task graph without relocating contracts or duplicating task records. Fresh projects start with empty definitions. Existing projects adopt planning explicitly; resume never migrates automatically.

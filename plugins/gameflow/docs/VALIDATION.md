@@ -65,3 +65,17 @@ user authority or ownership of shared-file edits; the coordinator reconciles the
   and local Markdown references are validated separately.
 - No external game project was migrated. These are ordinary regression checks;
   no agent benchmark, quality evaluation, or token-savings measurement was run.
+
+## Version 0.7.0 planning and retention
+
+The nine existing executable suites and two new suites pass. Planning coverage
+includes preview/apply/idempotence, exact task-set checks, backups, dependency
+cycles, confined output paths, preserved task lifecycle/ownership, experimental
+task creation, and native validator/resume/context rejection of bad epic references.
+Retention tests exercise Git ignore behavior, tracked accepted assets/conclusions,
+audit output, isolated branch preparation, preserved source refs, existing-output
+rejection and changed-tip rejection. Cleanup orchestration uses controlled filter
+fixtures; it is not a production history rewrite or a test of git-filter-repo itself.
+Lodgepole's existing planning graph passes the native validator read-only, with
+existing legacy-checkpoint and temporary-output warnings. No paid jobs, live engine
+edits, automatic project migrations or history rewrites are part of this release.

@@ -13,9 +13,11 @@ from managed_guidance import render, replace_checked
 from task_contract import render_contract
 
 
-def copy_templates(source: Path, destination: Path, replacements: dict[str, str]) -> None:
+def copy_templates(source: Path, destination: Path, replacements: dict[str, str], existing=False) -> None:
     for item in source.rglob("*"):
         relative = item.relative_to(source)
+        if existing and str(relative) in ('planning.json', 'PLANNING.md', 'ARTIFACT_RETENTION.md', '.gitignore'):
+            continue
         target = destination / relative
         if item.is_dir():
             target.mkdir(parents=True, exist_ok=True)
@@ -66,6 +68,7 @@ def main() -> int:
     except ValueError as exc:
         parser.error(str(exc))
     destination = project / ".gameflow"
+    existing = (destination / 'tasks/index.json').exists()
     copy_templates(
         template,
         destination,
@@ -74,10 +77,20 @@ def main() -> int:
             "ENGINE": args.engine,
             "DATE": dt.date.today().isoformat(),
         },
+        existing=existing,
     )
     first_contract = destination / "tasks/TASK-0001.md"
     if not first_contract.exists():
         first_contract.write_text(render_contract("TASK-0001", "Define the first vertical slice", discovery=True), encoding="utf-8")
+    if not existing:
+        from planning import render as render_planning, read
+        render_planning(project, read(destination/'tasks/index.json'), read(destination/'planning.json'))
+        # Only add project-level ignore rules on fresh initialization.
+        ignore = project/'.gitignore'
+        current = ignore.read_text(encoding='utf-8') if ignore.exists() else ''
+        additions = [rule for rule in ('/Artifacts/', '/Experiments/') if rule not in current.splitlines()]
+        if additions:
+            ignore.write_text(current + ('\n' if current and not current.endswith('\n') else '') + '\n'.join(additions) + '\n', encoding='utf-8')
     update_agents(project, plugin / "templates" / "AGENTS.block.md")
     print(f"Initialized GameFlow at {destination}")
     print("Existing project-state files were preserved.")

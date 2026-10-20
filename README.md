@@ -1,7 +1,7 @@
 # GameFlow marketplace
 
 GameFlow is a Codex plugin for durable game planning, Meshy-led static asset
-production, Unreal integration, and bounded autonomous work. Version 0.6.0
+production, Unreal integration, and bounded autonomous work. Version 0.7.0
 contains 14 skills. Plugin code stays outside game repositories; project state
 lives in .gameflow with a small AGENTS.md entrypoint.
 
@@ -10,11 +10,11 @@ lives in .gameflow with a small AGENTS.md entrypoint.
 Run in the host environment where Codex CLI runs (CLI 0.163.0 inspected):
 
 ```sh
-codex plugin marketplace add /mnt/c/workspace/GameWorkflow
+codex plugin marketplace add /mnt/c/workspace/gameflow
 codex plugin add gameflow@gameflow-local
 ```
 
-Native Windows users supply C:\workspace\GameWorkflow instead. To refresh an
+Native Windows users supply C:\workspace\gameflow instead. To refresh an
 installed local plugin, remove gameflow@gameflow-local and add it again, then
 start a fresh session. Existing MCP connections are reused, never reconfigured.
 
@@ -97,3 +97,17 @@ start a fresh session, and follow the [explicit migration guide](plugins/gameflo
 to preview and apply managed guidance updates. Migration preserves authored state
 and reports remaining manual reconciliation. No automatic resume-time upgrade,
 agent benchmark, or token-savings claim is included.
+
+## Version 0.7.0: planning and retention
+
+Milestones, epics and experiments are now supported by the plugin. Fresh projects
+receive empty planning definitions, generated navigation and local-only output
+policies; legacy projects remain valid without migration. Task creation supports
+`--epic` and `--kind experiment`. Native validation checks optional metadata.
+See [planning](plugins/gameflow/docs/PLANNING.md),
+[retention](plugins/gameflow/docs/ARTIFACT_RETENTION.md), and the
+[upgrade guide](plugins/gameflow/docs/MIGRATION.md).
+
+Run `python3 tests/test_planning.py` and `python3 tests/test_retention.py` from
+plugins/gameflow in addition to the existing suite. No project-specific assets,
+acceptance decisions or history removal lists are included.

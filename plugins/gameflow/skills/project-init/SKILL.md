@@ -15,3 +15,9 @@ For an audit request, run validation without initialization. Report structural e
 
 
 For CLI setup, keep plugin code outside the game, reuse configured MCP servers, and follow the repository README for host-specific install commands. Use tool-discovery when application work is selected. Existing schema-v1 projects remain valid without an upgrade; do not replace established settings. For an explicit tooling upgrade, read [migration instructions](../../docs/MIGRATION.md), preview `scripts/migrate_gameflow.py --project PROJECT`, then use `--apply` within the authorized upgrade scope. Report unresolved authored-guidance follow-ups separately. Never run migration automatically on resume.
+
+## Planning and retention
+
+Follow [planning](../../docs/PLANNING.md) and [artifact retention](../../docs/ARTIFACT_RETENTION.md). Respect project-authored overrides. Keep detailed verification and experiment payloads local-only, with compact revision-bound conclusions in tracked contracts. Do not infer acceptance from task migration or missing local evidence.
+
+Fresh initialization creates empty planning definitions and local-only output ignore rules. Existing projects adopt planning through the explicit planning migration; general guidance migration does not rewrite task metadata or Git history.

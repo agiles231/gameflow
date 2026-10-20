@@ -30,3 +30,9 @@ Without delegation, implement sequentially and leave work at verify for a separa
 ## Deferred work
 
 Use `deferred` for deliberately postponed work, including all rigging and animation production. Record the reason and explicit reactivation condition in its contract; clear active ownership only after reconciling running work. Deferred is not done. Deferred tasks must be leaves in the dependency graph: no task may depend on them. Before deferring, explicitly rescope affected active contracts and remove their dependence on deferred work; preserve the rationale in durable state. Combine rigging and animation into one deferred task per asset depending on its delivered static mesh. Skip deferred tasks during selection. A new provider/tool or session never reactivates it. Only explicit user direction satisfying the reactivation condition permits return to `planned`, followed by normal prerequisite checks. Do not delete historical artifacts or silently rewrite accepted evidence.
+
+## Planning and retention
+
+Follow [planning](../../docs/PLANNING.md) and [artifact retention](../../docs/ARTIFACT_RETENTION.md). Respect project-authored overrides. Keep detailed verification and experiment payloads local-only, with compact revision-bound conclusions in tracked contracts. Do not infer acceptance from task migration or missing local evidence.
+
+Use new_task.py --epic EPIC-NNNN --kind experiment for bounded investigations. Define hypothesis, baseline, variants, resource budget, measurements and stop condition. Record experiment_outcome separately from lifecycle status. Render planning views after changes; epic/milestone acceptance remains explicit.

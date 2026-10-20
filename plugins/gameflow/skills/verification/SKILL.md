@@ -31,3 +31,7 @@ For Meshy assets, independent acceptance is intentionally cheap: independently c
 Technical acceptance and manual review are separate. After an asset passes, the coordinator follows [optional-review.md](../asset-pipeline/references/optional-review.md) to enqueue its frozen revision and open the newest five pending assets in Blender. A deferred presentation or absent user approval does not fail verification. Do not interpret a technical pass as manual approval. Explicit user disapproval is a revision request handled by the coordinator, preserving prior evidence and returning that asset to interactive work.
 
 Preserve task ownership and resumable exit state using the shared [checkpoint lifecycle](../task-orchestration/references/checkpoints.md); optional review state is checkpoint evidence, not an acceptance gate.
+
+## Planning and retention
+
+Follow [planning](../../docs/PLANNING.md) and [artifact retention](../../docs/ARTIFACT_RETENTION.md). Respect project-authored overrides. Keep detailed verification and experiment payloads local-only, with compact revision-bound conclusions in tracked contracts. Do not infer acceptance from task migration or missing local evidence.

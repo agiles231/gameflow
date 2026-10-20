@@ -19,3 +19,7 @@ Reconcile executing and verify tasks before selecting new work: inspect recorded
 Skip `deferred` work, including all rigging and animation production. Preserve its reason/reactivation condition; do not reactivate it because a provider appeared; deferred tasks must have no dependents. Read effective Meshy settings from `.gameflow/tools/meshy.json` via meshy-config before generation. Future providers remain inactive.
 
 Respect `execution_mode: interactive`: resume implementation only in a user-directed interaction; unattended runs retain its next action and choose disjoint work.
+
+## Planning and retention
+
+Follow [planning](../../docs/PLANNING.md) and [artifact retention](../../docs/ARTIFACT_RETENTION.md). Respect project-authored overrides. Keep detailed verification and experiment payloads local-only, with compact revision-bound conclusions in tracked contracts. Do not infer acceptance from task migration or missing local evidence.

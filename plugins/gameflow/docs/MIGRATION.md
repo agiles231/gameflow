@@ -1,6 +1,6 @@
 # Upgrade an existing GameFlow project
 
-Version 0.6.0 retains schema version 1. Existing projects and legacy Markdown
+Version 0.7.0 retains schema version 1. Existing projects and legacy Markdown
 contracts remain supported without migration. Refresh the installed local plugin
 using the repository README's remove/add procedure and start a fresh session.
 Use the refreshed plugin's scripts, not a copied script from an older installation.
@@ -53,3 +53,7 @@ can be used to roll back if the file matches its result hash; otherwise inspect
 the recorded state instead of forcing restoration. Project state remains usable
 with the preceding plugin version; restore that installed version separately if
 needed. Run validation after restoring an originally valid entrypoint.
+
+## Planning and retention adoption
+
+Planning migration is a separate explicit operation; see [PLANNING.md](PLANNING.md) for its complete plan format and preview/apply commands. Guidance migration does not alter task metadata, Git tracking or history. Existing retention policy takes precedence; review ignore rules and tracked outputs separately using [ARTIFACT_RETENTION.md](ARTIFACT_RETENTION.md). No Lodgepole-specific task or asset decisions are bundled.

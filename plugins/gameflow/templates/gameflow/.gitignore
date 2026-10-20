@@ -1,2 +1,5 @@
+verification/*
+!verification/standards.md
+!verification/temporary/
 verification/temporary/*
 !verification/temporary/.gitignore
