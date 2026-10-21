@@ -1,9 +1,15 @@
 # Upgrade an existing GameFlow project
 
-Version 0.7.0 retains schema version 1. Existing projects and legacy Markdown
+Version 0.8.0 retains schema version 1. Existing projects and legacy Markdown
 contracts remain supported without migration. Refresh the installed local plugin
 using the repository README's remove/add procedure and start a fresh session.
 Use the refreshed plugin's scripts, not a copied script from an older installation.
+
+The 0.8.0 `optional_clauses` recipe field is additive. Existing configurations and
+string-variable calls need no migration and retain their previous output. Adopting
+boolean clause controls is explicit; a config using them requires 0.8.0+. Keep the
+previous config if rolling back to an older plugin. Future breaking changes must
+ship a migration script under the repository's [compatibility rule](../../../AGENTS.md).
 
 ## Preview and apply
 

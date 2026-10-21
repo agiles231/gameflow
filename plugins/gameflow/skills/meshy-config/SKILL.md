@@ -13,6 +13,12 @@ Start with the shipped empty `draft` configuration when no recipes exist. Infer 
 
 Create named recipes from the approved brief: declared prompt variables, human-readable selection criteria, integer priority, operation settings, and optional category/tags. Ask only about material missing creative choices. Avoid overfitting a universal recipe to one task. Keep all rigging and animation deferred under current policy, including simple assets and local Blender work, even if connected tools expose those capabilities. Record these as deferred leaves; executable tasks must not depend on them.
 
+For fixed wording that is either present or absent, use `optional_clauses` with
+literal text and an explicit boolean default rather than a free-form string or
+duplicated recipes. Supply boolean overrides through `--variables`; check both
+enabled and disabled rendered prompts for grammar, punctuation and spacing.
+Preserve user-provided template wording, adapting placeholder syntax only as needed.
+
 Run the helper using its installed plugin location:
 
 ```bash

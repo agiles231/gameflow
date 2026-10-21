@@ -1,9 +1,21 @@
 # GameFlow marketplace
 
 GameFlow is a Codex plugin for durable game planning, Meshy-led static asset
-production, Unreal integration, and bounded autonomous work. Version 0.7.0
+production, Unreal integration, and bounded autonomous work. Version 0.8.0
 contains 14 skills. Plugin code stays outside game repositories; project state
 lives in .gameflow with a small AGENTS.md entrypoint.
+
+Repository changes follow [AGENTS.md](AGENTS.md): every compatibility-breaking
+change must ship a migration script, recovery documentation and migration tests.
+
+## Version 0.8.0: fixed optional prompt clauses
+
+Meshy recipes can declare literal optional clauses with explicit boolean defaults
+and on/off overrides. This avoids unconstrained wording and duplicate recipes.
+Both enabled and omitted forms preserve exact whitespace and punctuation. Existing
+version-1 configs and string-variable behavior remain supported unchanged; only
+configs using the new field require the updated plugin. See the
+[configuration reference](plugins/gameflow/skills/meshy-config/references/config-format.md).
 
 ## Install in Codex CLI
 

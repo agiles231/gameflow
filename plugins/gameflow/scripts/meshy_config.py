@@ -104,7 +104,7 @@ def validate_config(config):
     ids = set()
     for recipe in config["recipes"]:
         object_keys(recipe, {"id", "operation", "criteria", "priority", "prompt_template", "variables",
-                             "settings", "category", "tags"}, "recipe",
+                             "settings", "category", "tags", "optional_clauses"}, "recipe",
                     {"id", "operation", "criteria", "priority", "prompt_template", "variables", "settings"})
         for field in ("id", "operation", "criteria"):
             text(recipe[field], f"recipe.{field}")
@@ -117,11 +117,23 @@ def validate_config(config):
         require(isinstance(variables, list) and all(isinstance(v, str) and re.fullmatch(r"[a-zA-Z_][a-zA-Z0-9_]*", v)
                 for v in variables), "variables must list valid placeholder names")
         require(len(set(variables)) == len(variables), "Duplicate variable declaration")
+        clauses = recipe.get("optional_clauses", {})
+        require(isinstance(clauses, dict), "optional_clauses must be an object")
+        require(not set(clauses) & set(variables), "Clause names must not duplicate variables")
+        for name, clause in clauses.items():
+            require(isinstance(name, str) and re.fullmatch(r"[a-zA-Z_][a-zA-Z0-9_]*", name),
+                    "optional_clauses must use valid placeholder names")
+            object_keys(clause, {"text", "default"}, "optional clause", {"text", "default"})
+            text(clause["text"], "optional clause text")
+            require(type(clause["default"]) is bool, "Optional clause default must be boolean")
         template = Template(recipe["prompt_template"])
         try:
-            template.substitute({v: "" for v in variables})
+            template.substitute({v: "" for v in [*variables, *clauses]})
         except (KeyError, ValueError) as exc:
             raise ConfigError("Invalid template or undeclared placeholder") from exc
+        placeholders = {m.group("named") or m.group("braced") for m in Template.pattern.finditer(
+            recipe["prompt_template"]) if m.group("named") or m.group("braced")}
+        require(set(clauses) <= placeholders, "Optional clause must appear in prompt_template")
         if "category" in recipe:
             text(recipe["category"], "recipe.category")
         if "tags" in recipe:
@@ -159,9 +171,16 @@ def resolve(config, operation, matches=(), template_id=None, variables=None, ove
     require(isinstance(variables, dict) and isinstance(overrides, dict), "Variables and overrides must be objects")
     no_credentials(variables, "variables")
     no_credentials(overrides, "overrides")
-    require(set(variables) == set(recipe["variables"]), "Missing or unknown template variables")
-    require(all(isinstance(v, str) for v in variables.values()), "Variable values must be strings")
-    prompt = Template(recipe["prompt_template"]).substitute(variables)
+    clauses = recipe.get("optional_clauses", {})
+    required = set(recipe["variables"])
+    require(required <= set(variables) <= required | set(clauses), "Missing or unknown template variables")
+    require(all(isinstance(variables[v], str) for v in required), "Variable values must be strings")
+    rendered = {v: variables[v] for v in required}
+    for name, clause in clauses.items():
+        enabled = variables.get(name, clause["default"])
+        require(type(enabled) is bool, "Optional clause values must be booleans, not text")
+        rendered[name] = clause["text"] if enabled else ""
+    prompt = Template(recipe["prompt_template"]).substitute(rendered)
     settings = copy.deepcopy(config["operation_defaults"].get(operation, {}).get("settings", {}))
     settings.update(copy.deepcopy(recipe["settings"]))
     settings.update(copy.deepcopy(overrides))

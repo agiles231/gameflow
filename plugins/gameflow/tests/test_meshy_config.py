@@ -31,6 +31,63 @@ def configured():
 
 
 class MeshyConfigTests(unittest.TestCase):
+    def test_optional_clause_default_toggle_and_literal_text(self):
+        config = configured()
+        recipe = config["recipes"][0]
+        recipe["prompt_template"] = "A ${subject} render ${fur_clause}and soft light."
+        recipe["optional_clauses"] = {
+            "fur_clause": {"text": "with very little fur detail ", "default": False}}
+        original = copy.deepcopy(config)
+        for supplied, expected in [({}, ""), ({"fur_clause": False}, ""),
+                                   ({"fur_clause": True}, "with very little fur detail ")]:
+            result = meshy.resolve(config, "mesh", template_id="prop",
+                                   variables={"subject": "elk", **supplied})
+            self.assertEqual(result["prompt"], f"A elk render {expected}and soft light.")
+            self.assertNotIn("fur_clause", result["arguments"])
+        self.assertEqual(config, original)
+        recipe["optional_clauses"]["fur_clause"].update(default=True, text="literal $subject $$ ")
+        result = meshy.resolve(config, "mesh", template_id="prop", variables={"subject": "elk"})
+        self.assertEqual(result["prompt"], "A elk render literal $subject $$ and soft light.")
+
+    def test_optional_clause_rejects_arbitrary_text_and_non_booleans(self):
+        config = configured()
+        config["recipes"][0].update(prompt_template="${subject}${fur}", optional_clauses={
+            "fur": {"text": " with very little fur detail", "default": False}})
+        for value in ("with dense fur", "", "false", 0, 1, None, [], {}):
+            with self.subTest(value=value), self.assertRaisesRegex(meshy.ConfigError, "booleans"):
+                meshy.resolve(config, "mesh", template_id="prop", variables={"subject": "elk", "fur": value})
+        with self.assertRaisesRegex(meshy.ConfigError, "Missing or unknown"):
+            meshy.resolve(config, "mesh", template_id="prop", variables={"fur": True})
+
+    def test_optional_clause_declarations_are_strict(self):
+        for clauses in ([], {"fur": {}}, {"fur": {"text": "fur"}},
+                        {"fur": {"text": "fur", "default": 1}},
+                        {"fur": {"text": " ", "default": False}},
+                        {"fur": {"text": 1, "default": False}},
+                        {"fur": {"text": "fur", "default": False, "extra": 1}},
+                        {"subject": {"text": "fur", "default": False}},
+                        {"bad-name": {"text": "fur", "default": False}},
+                        {"unused": {"text": "fur", "default": False}}):
+            config = configured()
+            config["recipes"][0].update(prompt_template="${subject}${fur}", optional_clauses=clauses)
+            with self.subTest(clauses=clauses), self.assertRaises(meshy.ConfigError):
+                meshy.validate_config(config)
+
+    def test_optional_clause_cli_boolean_toggle(self):
+        config = configured()
+        config["recipes"][0].update(prompt_template="${subject}${fur}", optional_clauses={
+            "fur": {"text": " with very little fur detail", "default": False}})
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "meshy.json"
+            path.write_text(json.dumps(config))
+            before = path.read_bytes()
+            result = subprocess.run([sys.executable, str(ROOT / "scripts/meshy_config.py"), "resolve",
+                                     str(path), "--operation", "mesh", "--template", "prop",
+                                     "--variables", '{"subject":"elk","fur":true}'], text=True, capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(json.loads(result.stdout)["prompt"], "elk with very little fur detail")
+            self.assertEqual(path.read_bytes(), before)
+
     def test_template_draft_has_no_provider_defaults(self):
         config = json.loads((ROOT / "templates/gameflow/tools/meshy.json").read_text())
         meshy.validate_config(config)
