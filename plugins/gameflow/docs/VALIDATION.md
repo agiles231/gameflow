@@ -79,3 +79,35 @@ fixtures; it is not a production history rewrite or a test of git-filter-repo it
 Lodgepole's existing planning graph passes the native validator read-only, with
 existing legacy-checkpoint and temporary-output warnings. No paid jobs, live engine
 edits, automatic project migrations or history rewrites are part of this release.
+
+## Version 0.9.0 blocker resolution and user verification
+
+All 11 executable regression suites pass. The expanded independently constructed
+v1 compatibility fixture preserves explicit stop/no-contact policy, a blocked
+interactive task, pending user question, consumed repair count and provider job
+through repeated initialization and guidance migration. No schemas or CLI inputs
+change; existing project policies remain authoritative.
+
+Independent read-only tabletop review exercised the updated skill instructions:
+
+| Scenario | Required behavior reviewed |
+| --- | --- |
+| Missing asset brief | Draft from approved direction; ask only unresolved variant/budget questions before generation. |
+| Exhausted repair allowance | Diagnose existing evidence, propose changed bounded repair, request extra allowance without resetting counts. |
+| Missing motion inputs | Search deliveries and request exact compatible inputs; discovery does not reactivate deferred production. |
+| Scheduled deadline with live provider job | Retain job ID/reservation and pending question; checkpoint without resubmission or background claims. |
+| Prior explicit targeted-repair authority | Reuse authorization overriding plugin default; no repeated permission gate. |
+| Answer arrives during independent work | Record it and resume with existing resource/task/time limits. |
+| Required mesh review with unsaved Blender work | Preserve session, prepare safe separate review and confirm visibility before approval. |
+| Gameplay review with screenshot only | Prepare actual Unreal interaction; screenshot cannot satisfy gameplay criteria. |
+| Yes arrives after artifact change | Bind to shown revision; present and verify changed candidate again. |
+| No without details | Preserve rejection, ask focused criterion feedback, repair only within scope/limits. |
+| Optional review unanswered | Keep optional queue pending without blocking technical acceptance. |
+| Required review unanswered after technical pass | Remain at verify, hold affected dependents, continue independent work. |
+
+The review led to explicit wording at acceptance decision points: every required
+user judgment must pass before done; replacement approval is revision-specific.
+These are instruction-level scenario checks, not automated agent benchmarks or
+live Blender/Unreal presentation tests. Skill frontmatter and local links are
+checked separately. No paid calls, game asset changes or project-policy migration
+are required for this release.

@@ -1,12 +1,32 @@
 # GameFlow marketplace
 
 GameFlow is a Codex plugin for durable game planning, Meshy-led static asset
-production, Unreal integration, and bounded autonomous work. Version 0.8.0
+production, Unreal integration, and bounded autonomous work. Version 0.9.0
 contains 14 skills. Plugin code stays outside game repositories; project state
 lives in .gameflow with a small AGENTS.md entrypoint.
 
 Repository changes follow [AGENTS.md](AGENTS.md): every compatibility-breaking
 change must ship a migration script, recovery documentation and migration tests.
+
+## Version 0.9.0: keep progressing through blockers
+
+Autopilot explains the exact blocker, attempts useful authorized recovery, and asks
+for the specific missing input instead of ending with a blocked queue. User-invoked
+runs can continue interactively: independent work proceeds while input is pending,
+and answers resume the affected task without another autopilot command. Missing
+briefs get concrete drafts; exhausted repairs get a revised plan and an explicit
+request for additional allowance. Existing authority is reused, never requested again.
+
+When user verification is required, GameFlow opens/prepares the actual candidate
+in Blender, Unreal or its appropriate application and asks specific, revision-bound
+Yes/No approval questions. It verifies the review is inspectable, preserves unrelated
+editor work, and keeps unanswered required checks pending. Optional review stays
+optional and technical acceptance remains independent.
+
+Hard limits, scheduled deadlines, spending authorization, deferred work and authored
+project stop/no-contact policies remain supported. No schema or CLI changes and no
+automatic project migration. See [blocker resolution](plugins/gameflow/skills/task-orchestration/references/blocker-resolution.md)
+and [user verification](plugins/gameflow/skills/verification/references/user-verification.md).
 
 ## Version 0.8.0: fixed optional prompt clauses
 
@@ -27,8 +47,14 @@ codex plugin add gameflow@gameflow-local
 ```
 
 Native Windows users supply C:\workspace\gameflow instead. To refresh an
-installed local plugin, remove gameflow@gameflow-local and add it again, then
-start a fresh session. Existing MCP connections are reused, never reconfigured.
+installed local plugin, run:
+
+```sh
+codex plugin remove gameflow@gameflow-local
+codex plugin add gameflow@gameflow-local
+```
+
+Then start a fresh session to load the updated skills. Existing MCP connections are reused, never reconfigured.
 
 ## Production workflow
 

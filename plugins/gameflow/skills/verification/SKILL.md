@@ -11,7 +11,7 @@ Put screenshots, viewport captures, and intermediate renders in `.gameflow/verif
 
 Write a result under `.gameflow/verification/results/` containing task ID, artifact path and revision/hash, application/tool versions, camera or viewport configuration, each check and evidence, overall result, and durable evidence paths. Then remove only captures owned by this verification attempt, leaving inherited files and `.gitignore` intact.
 
-Return pass/fail findings to the coordinator. On a pass, the coordinator moves `verify` to `done`; on failure it records actionable findings and moves to `executing` for an allowed repair or `blocked` for missing decisions/inputs. The coordinator updates `.gameflow/sessions/CURRENT.md` and runs the project validator.
+Return pass/fail findings to the coordinator. On a pass, after all required user judgments also pass, the coordinator moves `verify` to `done`; on failure it records actionable findings and moves to `executing` for an allowed repair or `blocked` for missing decisions/inputs. The coordinator updates `.gameflow/sessions/CURRENT.md` and runs the project validator.
 
 
 ## Independent acceptance

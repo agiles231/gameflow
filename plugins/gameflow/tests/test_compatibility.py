@@ -37,18 +37,34 @@ def main() -> int:
             "PROJECT.md", "CONSTRAINTS.md", "ART_DIRECTION.md", "GAMEPLAY.md",
             "INTERFACE.md", "ARCHITECTURE.md", "DECISIONS.md", "GLOSSARY.md",
             "verification/standards.md", "sessions/CURRENT.md", "tasks/TASK-0041.md",
+            "tasks/TASK-0042.md",
         ):
             write(relative, f"# Legacy {relative}\r\n\r\nAuthored content: café.\r\n".encode())
-        write("AUTOPILOT.md", b"# Existing project policy\n\nMaximum cycles: 7\nProvider allowance: 12 credits per week\n")
+        write("AUTOPILOT.md", b"# Existing project policy\n\nMaximum cycles: 7\nProvider allowance: 12 credits per week\nStop on exhausted repairs.\nDo not contact the user during scheduled runs.\n")
+        write("sessions/CURRENT.md", b"# Handoff\nTASK-0042 blocked; repair 1/1 consumed.\nPending question: authorize one revised fixture repair?\nDo not resubmit existing-job.\n")
         write("verification/temporary/.gitignore", b"*\n!.gitignore\n")
         write("assets/source/custom.bin", b"\x00\xff\x80legacy source\r\n")
         metadata = {"external_ui": {"labels": ["keep", "v1"], "revision": 17}}
         documents = {
             "tasks/index.json": {
-                "schema_version": 1, "next_id": 42, **metadata,
+                "schema_version": 1, "next_id": 43, **metadata,
                 "tasks": [{"id": "TASK-0041", "title": "Existing work", "status": "verify",
                            "parent": None, "depends_on": [], "owner": "legacy-session",
-                           "contract": "tasks/TASK-0041.md", **metadata}],
+                           "contract": "tasks/TASK-0041.md", **metadata},
+                          {"id": "TASK-0042", "title": "Blocked repair", "status": "blocked",
+                           "parent": None, "depends_on": [], "owner": None,
+                           "contract": "tasks/TASK-0042.md", "execution_mode": "interactive",
+                           "checkpoint": {
+                               "version": 1, "phase": "blocked", "authority": "Existing scope",
+                               "base_head": "a" * 40, "owner": None,
+                               "artifact_paths": [], "owned_paths": {},
+                               "shared_state_review": "Unchanged fixture",
+                               "preserved_baseline": {},
+                               "jobs": [{"id": "existing-job", "state": "SUCCEEDED"}],
+                               "repair_counts": {"fixture": 1},
+                               "next_action": "Await explicit additional repair allowance",
+                               "acceptance": None, "commit": {"state": "pending", "hash": None}},
+                           **metadata}],
             },
             "assets/manifest.json": {"schema_version": 1, "assets": [], **metadata},
             "tools/capabilities.json": {"schema_version": 1, "capabilities": [], **metadata},

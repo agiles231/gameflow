@@ -1,6 +1,6 @@
 # Upgrade an existing GameFlow project
 
-Version 0.8.0 retains schema version 1. Existing projects and legacy Markdown
+Version 0.9.0 retains schema version 1. Existing projects and legacy Markdown
 contracts remain supported without migration. Refresh the installed local plugin
 using the repository README's remove/add procedure and start a fresh session.
 Use the refreshed plugin's scripts, not a copied script from an older installation.
@@ -10,6 +10,23 @@ string-variable calls need no migration and retain their previous output. Adopti
 boolean clause controls is explicit; a config using them requires 0.8.0+. Keep the
 previous config if rolling back to an older plugin. Future breaking changes must
 ship a migration script under the repository's [compatibility rule](../../../AGENTS.md).
+
+## Version 0.9.0 compatibility
+
+Blocker resolution and required user-review presentation are instruction changes;
+they add no task statuses, persisted fields or CLI requirements. Existing schema-v1
+projects, task contracts, provider jobs, consumed repair counts and review queues
+remain supported. Existing AUTOPILOT.md files are not overwritten: explicit project
+stop/no-contact rules and allowances still take precedence. Thus no migration is
+required. The compatibility regression fixture exercises those policies, a pending
+interactive blocker/question, consumed repair count and an existing provider job
+through repeated initialization and preview/apply of the existing guidance migrator.
+
+Refreshing the plugin supplies the new workflow references. Reconcile project-specific
+instructions only when the user requests that policy change; installing the plugin
+is not authority to rewrite a game's authored policies. The updated template applies
+to newly initialized policy files. Required user approval stays in existing task
+contracts and handoffs, distinct from the optional manual-review queue.
 
 ## Preview and apply
 
