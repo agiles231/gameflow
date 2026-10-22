@@ -16,12 +16,20 @@ These limits apply to one `$gameflow:autopilot` invocation. Adjust them for the 
 - Creation of bounded child tasks discovered during implementation
 - Task, asset, decision, verification, and session-state updates
 
-## Always stop for human input
+## Obtain human input before the affected action
 
 - A missing creative or product decision that materially changes the result
 - Purchases, publishing, external messages, account or credential changes
 - Destructive or difficult-to-recover operations affecting user work
 - Expansion beyond the accepted project and milestone scope
+
+Explain the blocker and attempt useful authorized preparation before asking a
+focused question. A user-invoked autopilot run may continue interactively; work on
+independent tasks while awaiting input, then resume on reply without a new command.
+Do not treat silence as approval or restart consumed repair allowances. Scheduled
+runs checkpoint with the pending question by their deadline. Hard limits and
+explicit project stop/no-contact policies still apply. A blocked-only status report
+is not progress; record the recovery attempted and the precise next action.
 
 ## Completion rule
 

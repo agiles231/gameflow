@@ -108,3 +108,22 @@ Fresh initialization uses the current shared contract and handoff templates. Exi
 ## Milestones, epics and experiments
 
 See [planning](PLANNING.md). Optional planning metadata extends the canonical task graph without relocating contracts or duplicating task records. Fresh projects start with empty definitions. Existing projects adopt planning explicitly; resume never migrates automatically.
+
+## Autopilot blocker resolution
+
+A user-invoked run can become interactive. When a task is blocked, explain the
+precise obstacle, attempt useful authorized recovery and ask for the smallest
+missing decision/input. Continue independent tasks while awaiting a reply, then
+resume without requiring another autopilot invocation. Draft missing briefs from
+approved direction and propose bounded repairs; do not stop at a queue inventory.
+See [blocker resolution](../skills/task-orchestration/references/blocker-resolution.md).
+
+Hard limits, explicit project stop/no-contact policies, spending authority,
+deferred-work boundaries and independent acceptance remain in force. Repair
+allowances are extended only explicitly, never reset. Scheduled runs checkpoint
+with an actionable question by their deadline. This is a progress obligation,
+not a guarantee of completion without inputs or continuous background execution.
+
+This guidance is backward-compatible: schema-v1 state, CLI inputs, task statuses,
+checkpoint fields, authored AUTOPILOT policies and bounded unattended operation
+remain supported. No automatic project migration or policy rewrite occurs.

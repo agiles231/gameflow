@@ -15,6 +15,8 @@ resources. Poll recorded provider IDs instead of repeating submissions. Recovery
 phases have priority over new tasks, but waiting on a healthy known job does not
 block unrelated work. Keep interactive and deferred work out of autonomous
 implementation; reconcile its existing jobs/ownership without regenerating it.
+Use [blocker resolution](blocker-resolution.md) to invite user-directed progress
+on interactive work. Deferred work still requires explicit reactivation.
 
 For each free worker slot, choose the highest-priority runnable phase whose inputs
 exist, dependencies are accepted and commit-reconciled, and required outputs and
@@ -109,6 +111,9 @@ queue as a stop while runnable selected phases or known jobs remain. Do not clea
 live ownership just because the coordinator is ending; record worker/job identity,
 artifact state, remaining reservations, repair counts and exact next actions.
 A worker timeout is not proof that its application/provider action stopped.
+An empty ready queue or task-local blocker triggers [blocker resolution](blocker-resolution.md)
+before ending: attempt useful authorized recovery and ask the specific pending
+question while disjoint workers continue. Honor hard limits and no-contact policies.
 
 Finish reconciles every selected task, including repaired and newly created child
 tasks. Keep unfinished selections in the handoff. Final push is possible only

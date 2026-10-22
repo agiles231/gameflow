@@ -1,6 +1,6 @@
 ---
 name: autopilot
-description: Autonomously advance a GameFlow project through ready tasks, implementation, verification, repair, and completion within explicit run limits. Use for unattended or scheduled game-development runs.
+description: Autonomously advance a GameFlow project through ready tasks, implementation, verification, repair, and completion within explicit run limits. Use for bounded game-development runs, including interactive blocker resolution and unattended or scheduled work.
 ---
 
 # Run GameFlow autonomously
@@ -15,9 +15,34 @@ Inspect Git HEAD and staged, unstaged, and untracked changes before any run writ
 
 Record the tasks selected for this bounded run in the handoff, including recovered work and any required child/repair tasks added during execution. Do not remove unfinished selections to declare success. Completion of this run is distinct from completion of the entire game. Use the limits in `AUTOPILOT.md`. If it is absent, default to at most three completed task cycles, 90 minutes elapsed time, and one repair attempt per failed acceptance criterion. Always leave enough time to write a clean checkpoint. A scheduled run must stop before it could overlap the next scheduled run.
 
+## Resolve blockers and keep progressing
+
+A blocker is a problem to work through, not a successful end to autopilot. Always
+advance the selected objective: implement an authorized step, reduce a concrete
+uncertainty, or obtain the specific user decision needed to continue. Merely listing
+blocked tasks, changing status, or repeating a previous diagnosis is not progress.
+
+Use [blocker resolution](../task-orchestration/references/blocker-resolution.md)
+when a task cannot proceed or the ready queue is empty. Explain the task, failed
+prerequisite, evidence, and consequence in plain language. Inspect existing inputs
+and authority, attempt the smallest useful authorized recovery, and ask a focused
+question when user input is needed. Prepare a concrete recommendation before asking
+for approval. Do not ask again for authority already granted or treat an untested
+repair approach as impossible.
+
+In a user-invoked run, move into interactive work when needed; autopilot is not
+restricted to unattended execution. Ask early using an available input tool,
+continue independent work while awaiting the answer, and resume the affected task
+when it arrives without requiring another autopilot invocation. Never treat silence
+as approval. When input is the only remaining prerequisite, keep the question
+pending; if the interface requires yielding the turn, end with the specific question
+and a resumable checkpoint, not a generic blocked report. Scheduled runs deliver
+that same actionable question and checkpoint by their deadline, without busy waiting
+or claiming to remain running after the session ends.
+
 ## Concurrent task loop
 
-Use [the concurrent scheduling protocol](../task-orchestration/references/concurrent-scheduling.md). This skill authorizes bounded subagent delegation for eligible independent tasks. Fill the available worker slots instead of waiting for a whole task cycle before dispatching another task. Honor stricter project or user limits. Tasks with `execution_mode: interactive` remain held for user-directed revision; reconcile their jobs/evidence safely, but never autonomously implement or regenerate them. Skip deferred tasks.
+Use [the concurrent scheduling protocol](../task-orchestration/references/concurrent-scheduling.md). This skill authorizes bounded subagent delegation for eligible independent tasks. Fill the available worker slots instead of waiting for a whole task cycle before dispatching another task. Honor stricter project or user limits. Tasks with `execution_mode: interactive` require user-directed revision: invite the needed input in a user-invoked run, then proceed within that direction. Never autonomously implement or regenerate them while awaiting it. Skip deferred tasks unless the user explicitly reactivates them; a generic autopilot request is not reactivation.
 
 1. Reconcile live ownership, provider jobs, accepted-but-uncommitted tasks, pending verification and partial implementation in checkpoint order. Recover before selecting new work, but healthy pending jobs or a task-local blocker do not prevent disjoint tasks from running. Dependencies require accepted prerequisites with reconciled commit state.
 2. Admit eligible tasks in priority order, reserving task-cycle capacity for every selected unfinished task. Claim disjoint outputs and required application resources through the coordinator. Dispatch independent implementation workers up to actual runtime and project limits. Promote planned work only when its inputs and prerequisites exist.
@@ -25,7 +50,7 @@ Use [the concurrent scheduling protocol](../task-orchestration/references/concur
 4. Move completed implementation to `verify` and freeze its artifact revision. Assign a distinct subagent or separate session to verify actual outputs against the acceptance criteria; the implementation report is not proof. Make verifier capacity available as implementations return. If independent verification is unavailable, retain `verify` and record the limitation. Keep transient images in the temporary verification directory and remove only that attempt's captures after recording conclusions.
 5. On success, the coordinator records acceptance and marks the task `done`. Serialize its checkpoint commit through the protocol below; dependent work waits for commit reconciliation. Independent workers may continue on disjoint outputs while the coordinator commits.
 6. On failure, return the affected task to `executing`, apply the remaining bounded repair allowance, then assign fresh independent verification of the new revision. Preserve consumed repair counts across workers and resumes. A task-local failure does not cancel disjoint work.
-7. Refill free slots after every result, resource release, and reconciled commit. When there is no runnable phase, wait on known workers/jobs within the elapsed-time limit; an empty ready queue is not completion while selected work remains active.
+7. Refill free slots after every result, resource release, and reconciled commit. When there is no runnable phase, reconcile known workers/jobs and run blocker resolution within the elapsed-time limit. Trace unmet dependencies to the first actionable prerequisite; an empty ready queue does not justify a blocked-only exit.
 
 ### Serialized task commits
 
@@ -37,7 +62,22 @@ Prefer deterministic commands and application APIs over UI control. Use desktop 
 
 ## Stop conditions
 
-A full task-cycle reservation cap stops new task admission, not the implementation, verification, repair or commit phases already reserved. Finish those phases while time and remaining repair allowance permit. Stop cleanly when the elapsed-time limit or another applicable hard limit is reached; no task or selected phase is runnable and no tracked worker/job can make progress; a material creative/product decision blocks all available work; additional authorization is required; an acceptance failure persists after its allowed repair and no independent ready work remains; a verified task cannot be committed cleanly; tooling or project state is unsafe or inconsistent; or all tasks needed for the defined game completion criteria are `done`.
+A full task-cycle reservation cap stops new task admission, not the implementation,
+verification, repair or commit phases already reserved. Finish those phases while
+time and remaining repair allowance permit. Missing inputs, creative/product
+questions, unavailable tools, exhausted repair allowances and an empty ready queue
+trigger blocker resolution, not immediate termination. Exhausted retries require
+a revised bounded approach and explicit additional allowance before another repair;
+never reset consumed counts or evade the cap with a child task.
+
+Stop execution at an applicable hard limit, on explicit user stop, when all game
+completion criteria are verified, or when no authorized action remains after
+concrete recovery and a specific input request. Unsafe ownership/state or a failed
+commit stops affected mutations/new dispatch immediately; safe diagnosis and a
+focused recovery question still proceed. Preserve existing project stop/no-contact
+policies and scheduled-run deadlines. If the user is unavailable, record what was
+attempted, what changed, the exact pending question and the next action on reply.
+Do not claim completion or promise background continuation.
 
 Do not mark the game complete merely because the current milestone or queue is empty. Completion requires every criterion in `PROJECT.md` to be satisfied with durable verification evidence.
 
@@ -57,7 +97,7 @@ This skill runs within the current Codex session; it does not install a schedule
 
 Make reversible production choices within the approved brief and record meaningful rationale. Ask only when a choice materially changes creative direction, scope, acceptance, authorization, or budget. Honor existing project policies rather than overwriting them with these defaults.
 
-Use task-orchestration for worker ownership and independent verification, tool-discovery before application operations, and the production skill matching the task. Failed verification consumes the task's existing repair allowance, including across resumed sessions; a new worker does not reset it. If one task is blocked, advance unrelated ready work when the run remains safe and policy permits. Stop the run for global state/authority problems.
+Use task-orchestration for worker ownership and independent verification, tool-discovery before application operations, and the production skill matching the task. Failed verification consumes the task's existing repair allowance, including across resumed sessions; a new worker does not reset it. If one task is blocked, advance unrelated ready work when the run remains safe and policy permits. For global state/authority problems, stop unsafe actions, diagnose safely, and use blocker resolution to request the precise decision needed.
 
 Use asset-generation for paid providers. A connected account does not grant spending authority. Coordinator records reservations and reconciles jobs before starting further billable work. At finish, record workers still running, job IDs, application/file state, limits consumed, and any reserved or uncertain charges.
 
