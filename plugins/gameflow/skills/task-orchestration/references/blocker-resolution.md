@@ -36,12 +36,17 @@ prerequisites are satisfied, or done until independently accepted.
 
 | Blocker | Useful attempt and focused follow-up |
 | --- | --- |
-| Missing supplied asset or motion | Inspect existing deliveries and compatible inputs. Prepare the exact missing-file requirements, then ask for the source/location or a scoped alternative. Never silently author deferred motion. |
+| Missing supplied asset or motion | Inspect existing deliveries and compatible inputs. Prepare the exact missing-file requirements, then ask for the source/location or a scoped alternative. Input discovery is not production or reactivation; never silently author or integrate motion that the effective policy defers. |
 | Missing production brief | Draft a bounded brief from approved direction, including outputs, references and resource limits. Ask only about unresolved choices; do not treat the draft as generation/spending approval. |
 | Failed acceptance with no repairs left | Reuse failure evidence, diagnose the cause and propose a changed, bounded repair with checks and cost. Ask for additional attempts explicitly; do not reset counts, relabel the same repair as diagnosis, or create a child to evade the cap. |
 | Unavailable provider or editor | Check current capability and recorded jobs. Use a policy-permitted alternate for non-generation work, or prepare exact connection/recovery steps. Never resubmit uncertain paid work or bypass the provider policy. |
 | Default policy conflicts with desired repair | Check whether the user already authorized the specific repair. If not, inspect safely and propose exact edits/preservation checks, then ask for the necessary override. A failed simple method does not prove all repairs impossible. |
 | Ambiguous ownership, unsafe state or failed commit | Freeze affected writes/new dispatch as required, inspect safely and isolate the conflict. Ask the narrow ownership/recovery question; never overwrite work to manufacture progress. |
+
+For required user verification, follow
+[the review setup and Yes/No approval workflow](../../verification/references/user-verification.md).
+Open the candidate in the appropriate application before asking for approval;
+if presentation fails, resolve that setup blocker first.
 
 ## Keep progress real and durable
 

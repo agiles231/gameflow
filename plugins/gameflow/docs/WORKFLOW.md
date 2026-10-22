@@ -127,3 +127,9 @@ not a guarantee of completion without inputs or continuous background execution.
 This guidance is backward-compatible: schema-v1 state, CLI inputs, task statuses,
 checkpoint fields, authored AUTOPILOT policies and bounded unattended operation
 remain supported. No automatic project migration or policy rewrite occurs.
+
+Required user verification includes preparing and opening the candidate in its
+application, confirming the review setup and asking explicit Yes/No questions with
+revision-bound criteria. See [user verification](../skills/verification/references/user-verification.md).
+Optional asset-review queues remain optional; required judgment is recorded in the
+task contract and cannot be inferred from silence or a technical pass.

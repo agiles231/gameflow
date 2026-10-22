@@ -31,6 +31,16 @@ runs checkpoint with the pending question by their deadline. Hard limits and
 explicit project stop/no-contact policies still apply. A blocked-only status report
 is not progress; record the recovery attempted and the precise next action.
 
+## Required user verification
+
+When a task requires my approval, prepare and open the actual candidate in Blender,
+Unreal or the appropriate application, with the relevant views/test state ready.
+Confirm the review is inspectable and ask explicit Yes/No questions stating the
+specific criteria and revision being approved. If setup fails, explain and resolve
+it before asking for approval. No answer stays pending; a No leads to focused
+interactive revision. Optional asset review remains optional unless explicitly
+made required; user approval does not replace independent technical checks.
+
 ## Completion rule
 
 The game is complete only when every completion criterion in `PROJECT.md` has durable verification evidence and no required task remains unfinished.

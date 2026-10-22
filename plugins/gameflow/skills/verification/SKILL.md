@@ -26,6 +26,19 @@ Store durable logs, measurements, and concise findings separately from disposabl
 
 For Meshy assets, independent acceptance is intentionally cheap: independently confirm the job completed, expected downloads are readable, required dependencies exist, intended engine import/loading succeeds, and artifact identity/provenance is recorded. Do not run artistic/anatomy/topology reviews, numerical quality sweeps, render batches, or creative repairs unless the user explicitly requested those checks. Missing delivery is a failure, not a reason for creative regeneration. Keep verification independent even for this reduced scope. Existing gameplay, UI/audio, build and package contracts retain meaningful tests. If inherited mesh criteria conflict with the approved delivery-only policy, have the coordinator record the scoped criteria change before executing; do not pretend old audits passed.
 
+## Required user verification
+
+When the user or contract requires user verification, follow
+[user-verification.md](references/user-verification.md). Open and prepare the actual
+candidate in Blender, Unreal or the appropriate application, confirm it is
+inspectable, and ask explicit revision-bound Yes/No questions with specific approval
+criteria. Prefer a prompted question tool when available and permitted. Do not ask
+the user to approve unseen work or a vague summary. Preserve user-owned sessions;
+resolve presentation problems before requesting approval. Record the answer and
+continue interactive revision on No. Required user judgment supplements independent
+technical checks and remains pending until an explicit answer; it is distinct from
+the optional workflow below.
+
 ## Optional user inspection
 
 Technical acceptance and manual review are separate. After an asset passes, the coordinator follows [optional-review.md](../asset-pipeline/references/optional-review.md) to enqueue its frozen revision and open the newest five pending assets in Blender. A deferred presentation or absent user approval does not fail verification. Do not interpret a technical pass as manual approval. Explicit user disapproval is a revision request handled by the coordinator, preserving prior evidence and returning that asset to interactive work.

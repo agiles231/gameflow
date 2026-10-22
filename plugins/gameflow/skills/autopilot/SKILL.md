@@ -40,6 +40,12 @@ and a resumable checkpoint, not a generic blocked report. Scheduled runs deliver
 that same actionable question and checkpoint by their deadline, without busy waiting
 or claiming to remain running after the session ends.
 
+When the missing input is user verification, use
+[required user verification](../verification/references/user-verification.md):
+prepare and open the actual candidate in the appropriate application, verify the
+review setup, and ask specific Yes/No approval questions. A generic “please review”
+message or file path alone is not a completed review handoff.
+
 ## Concurrent task loop
 
 Use [the concurrent scheduling protocol](../task-orchestration/references/concurrent-scheduling.md). This skill authorizes bounded subagent delegation for eligible independent tasks. Fill the available worker slots instead of waiting for a whole task cycle before dispatching another task. Honor stricter project or user limits. Tasks with `execution_mode: interactive` require user-directed revision: invite the needed input in a user-invoked run, then proceed within that direction. Never autonomously implement or regenerate them while awaiting it. Skip deferred tasks unless the user explicitly reactivates them; a generic autopilot request is not reactivation.
@@ -105,7 +111,7 @@ Use asset-generation for paid providers. A connected account does not grant spen
 
 All complex mesh generation uses Meshy MCP with `.gameflow/tools/meshy.json` resolved through meshy-config: project defaults, selected recipe, then task overrides. Only explicit simple-shape tasks may create meshes locally. Blender performs noncreative integration only. Missing Meshy capability/allowance blocks generation; no provider, script, UI or local-modeling fallback. Future providers never autoactivate. All rigging and animation production is `deferred`; skip it; deferred tasks must have no dependents, and rigging/animation should be one combined deferred leaf per asset depending on the delivered static mesh. Resume only after explicit user direction revises the policy. Deferred tasks cannot count as complete.
 
-Use independent cheap delivery acceptance for Meshy assets. Do not start artistic or numerical quality audits, render batches, creative repair or unrequested variations. Preserve ordinary gameplay/build validation. Reconcile inherited criteria with the approved scope durably before execution rather than silently accepting them.
+Use independent cheap delivery acceptance for Meshy assets. Do not start artistic or numerical quality audits, render batches, creative repair or variations without explicit applicable user direction. Apply existing user-authorized exceptions without asking again. Preserve ordinary gameplay/build validation. Reconcile inherited criteria with the approved scope durably before execution rather than silently accepting them.
 
 ## Planning and retention
 
