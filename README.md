@@ -5,6 +5,10 @@ production, Unreal integration, and bounded autonomous work. Version 0.9.0
 contains 14 skills. Plugin code stays outside game repositories; project state
 lives in .gameflow with a small AGENTS.md entrypoint.
 
+For a complete explanation of the skills, state machines, project records,
+operating workflow, and improvement opportunities, read the
+[GameFlow plugin guide](plugins/gameflow/docs/PLUGIN_GUIDE.md).
+
 Repository changes follow [AGENTS.md](AGENTS.md): every compatibility-breaking
 change must ship a migration script, recovery documentation and migration tests.
 
