@@ -1,6 +1,6 @@
 # GameFlow plugin architecture and workflow guide
 
-GameFlow 0.9.0 is a Codex plugin for managing game development as bounded, resumable tasks. It combines 14 instruction-based skills, Python helpers, project templates, and durable project records. Its current production workflow supports Unreal development, Meshy-generated complex static meshes, Blender integration, and local builds and packaging. All rigging and animation production is deferred by default.
+GameFlow 0.9.0 is a Codex plugin for managing game development as bounded, resumable tasks. It combines 15 instruction-based skills, Python helpers, project templates, and durable project records. Its current production workflow supports Unreal development, Meshy-generated complex static meshes, Blender integration, and local builds and packaging. All rigging and animation production is deferred by default.
 
 The central operating rule is that implementation, independent acceptance, Git commits, and delivery are separate events. A successful tool call does not complete a task. A task can be accepted but still need a commit. A completed run does not mean the game is complete.
 
@@ -30,7 +30,7 @@ The plugin lives outside the game repository. The game repository contains its o
 ```mermaid
 flowchart TB
     User["User direction and authorization"] --> Session["Codex session"]
-    Plugin["Installed GameFlow plugin"] --> Skills["14 skills and workflow references"]
+    Plugin["Installed GameFlow plugin"] --> Skills["15 skills and workflow references"]
     Plugin --> Helpers["Python helpers"]
     Plugin --> Templates["Project templates"]
     Skills --> Session
@@ -106,6 +106,7 @@ Solid arrows show common routing; dotted arrows show capability support. Generat
 | [task-orchestration](../skills/task-orchestration/SKILL.md) | Decompose outcomes, allocate IDs, assign work, and manage the canonical graph. | Scope, dependencies, inputs, observable acceptance, required context, ownership, resource limits. | Bounded contracts, claims, transitions, proposed child work, and acceptance bookkeeping. Coordinator alone writes shared state; deferred tasks remain leaves. |
 | [task-execution](../skills/task-execution/SKILL.md) | Implement one bounded task or resume its partial work. | Ready task or recoverable checkpoint, contract, required context, authority, tool access, owned outputs. | Actual deliverable and evidence at `verify`, or an exact blocked/partial checkpoint. No self-certification or silent scope expansion. |
 | [autopilot](../skills/autopilot/SKILL.md) | Advance several eligible tasks within explicit run limits. | Resume state, Git baseline, project autopilot policy, task-cycle/time/repair allowances. | Concurrent authorized work, independent checks, serialized commits, checkpointed unfinished work, and an eligible final push. Runs only in the current session. |
+| [autopilot-unbounded](../skills/autopilot-unbounded/SKILL.md) | Advance the in-scope graph until no authorized work remains. | Same lifecycle as autopilot, with no default task, time, or numeric repair cap; explicit applicable policies still apply. | Verified and committed work, progress-driven repairs, and an honest checkpoint when the graph is exhausted or input is required. |
 | [tool-discovery](../skills/tool-discovery/SKILL.md) | Establish actual application/provider capability before relevant work or after a connection changes. | Selected task, live exposed schemas, app/project identity, dirty state, ownership, executable host paths. | Observed capability/application records and a supported execution route, or a precise blocker. No billable probes, speculative availability, or automatic MCP reconfiguration. |
 | [meshy-config](../skills/meshy-config/SKILL.md) | Define or inspect deterministic prompt recipes and operation settings. | Approved brief, current config, live schemas, allowance policy reference. | Nonsecret config plus offline validation and resolved request JSON. The helper neither saves config nor submits jobs or reserves spending. |
 | [asset-generation](../skills/asset-generation/SKILL.md) | Generate a complex mesh through Meshy MCP. | Task/asset ID, resolved recipe, live schema, permitted uploads, bounded allowance and reservation. | Preserved provider outputs, job identity, settings, provenance, and delivery evidence at `verify`. No alternate provider, direct HTTP, local modeling fallback, or automatic creative regeneration. |

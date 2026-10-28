@@ -1,8 +1,8 @@
 # GameFlow marketplace
 
 GameFlow is a Codex plugin for durable game planning, Meshy-led static asset
-production, Unreal integration, and bounded autonomous work. Version 0.9.0
-contains 14 skills. Plugin code stays outside game repositories; project state
+production, Unreal integration, and autonomous work. Version 0.9.0
+with the additive unbounded mode contains 15 skills. Plugin code stays outside game repositories; project state
 lives in .gameflow with a small AGENTS.md entrypoint.
 
 For a complete explanation of the skills, state machines, project records,
@@ -11,6 +11,20 @@ operating workflow, and improvement opportunities, read the
 
 Repository changes follow [AGENTS.md](AGENTS.md): every compatibility-breaking
 change must ship a migration script, recovery documentation and migration tests.
+
+## Choose an autopilot mode
+
+- `$gameflow:autopilot` retains its bounded defaults: three task cycles, 90 minutes,
+  and one repair per failed criterion, subject to project policy.
+- `$gameflow:autopilot-unbounded` continues until the in-scope graph has no
+  authorized work available, with no default task, time, or numeric repair cap.
+  Repairs must make progress; explicit applicable limits, spending authority,
+  verification, and scheduled deadlines still apply.
+
+The new [unbounded skill](plugins/gameflow/skills/autopilot-unbounded/SKILL.md)
+leaves the existing skill and project formats unchanged. No migration is needed.
+Existing projects retain their authored policies and checkpoints; the compatibility
+and workflow regression suites cover initialization, preservation, and validation.
 
 ## Version 0.9.0: keep progressing through blockers
 
