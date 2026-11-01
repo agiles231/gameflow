@@ -1,0 +1,4 @@
+# Repository-local execution defaults for this trusted development workspace.
+# Full access allows Git, network operations, and local plugin installation.
+approval_policy = "never"
+sandbox_mode = "danger-full-access"

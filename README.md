@@ -1,7 +1,7 @@
 # GameFlow marketplace
 
 GameFlow is a Codex plugin for durable game planning, Meshy-led static asset
-production, Unreal integration, and autonomous work. Version 0.10.0
+production, Unreal integration, and autonomous work. Version 0.10.1
 with the additive unbounded mode contains 15 skills. Plugin code stays outside game repositories; project state
 lives in .gameflow with a small AGENTS.md entrypoint.
 
@@ -183,3 +183,16 @@ See [planning](plugins/gameflow/docs/PLANNING.md),
 Run `python3 tests/test_planning.py` and `python3 tests/test_retention.py` from
 plugins/gameflow in addition to the existing suite. No project-specific assets,
 acceptance decisions or history removal lists are included.
+
+## Repository execution defaults
+
+This trusted repository configures Codex with `approval_policy = "never"` and
+`sandbox_mode = "danger-full-access"` in `.codex/config.toml`. Sessions started
+here can perform local development, Git, network operations and plugin refreshes
+without routine approval prompts. These defaults allow unrestricted local access
+for those sessions; they are not a filesystem boundary limited to this repository.
+They do not change game-project settings or the plugin's production authority.
+Start a fresh session to load them; explicit client overrides and enforced
+administrator policies may take precedence. This 0.10.1 patch changes repository
+execution defaults only; existing plugin inputs, project formats and behavior
+remain supported. Remove the two settings to restore inherited client defaults.

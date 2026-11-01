@@ -19,3 +19,11 @@ the script must stop safely and report the exact remaining manual action.
 
 For backward-compatible changes, state why existing inputs and behavior remain
 supported and cover that claim with appropriate regression tests.
+
+## Routine execution authority
+
+Within the user-requested scope, proceed with reading, editing, tests, version
+updates, commits, pushes, and local plugin refreshes without asking for repeated
+confirmation. Repository-local Codex settings request no approval prompts for
+trusted sessions. Honor actual runtime restrictions and explicit user limits;
+ask only for missing decisions or authority that materially changes the scope.

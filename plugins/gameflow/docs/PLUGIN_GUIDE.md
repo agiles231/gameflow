@@ -1,10 +1,10 @@
 # GameFlow plugin architecture and workflow guide
 
-GameFlow 0.10.0 is a Codex plugin for managing game development as bounded, resumable tasks. It combines 15 instruction-based skills, Python helpers, project templates, and durable project records. Its current production workflow supports Unreal development, Meshy-generated complex static meshes, Blender integration, and local builds and packaging. All rigging and animation production is deferred by default.
+GameFlow 0.10.1 is a Codex plugin for managing game development as bounded, resumable tasks. It combines 15 instruction-based skills, Python helpers, project templates, and durable project records. Its current production workflow supports Unreal development, Meshy-generated complex static meshes, Blender integration, and local builds and packaging. All rigging and animation production is deferred by default.
 
 The central operating rule is that implementation, independent acceptance, Git commits, and delivery are separate events. A successful tool call does not complete a task. A task can be accepted but still need a commit. A completed run does not mean the game is complete.
 
-This guide describes the repository's 0.10.0 implementation and policies. It includes the supported states and data elements, operational procedures, and an improvement backlog. Diagrams show intended workflow unless explicitly described as executable validation. Provider status names are provider-specific; conceptual provider phases below are not a new GameFlow enum.
+This guide describes the repository's 0.10.1 implementation and policies. It includes the supported states and data elements, operational procedures, and an improvement backlog. Diagrams show intended workflow unless explicitly described as executable validation. Provider status names are provider-specific; conceptual provider phases below are not a new GameFlow enum.
 
 ## Evidence-based autonomy in 0.10.0
 
