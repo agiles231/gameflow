@@ -33,6 +33,11 @@ of it, admit no new tasks, and do not discard selections to manufacture capacity
 When delegation or independent verification is unavailable, avoid accumulating
 more new implementations than the run's reserved task capacity allows.
 
+Before spawning or reusing a worker, apply [model selection](model-selection.md),
+including mandatory configured repair escalation (Astra by default) after failed acceptance. Reuse only
+workers whose known model satisfies that selection; a follow-up message cannot
+upgrade a worker.
+
 Before spawning, reserve the task and disjoint output scope under the coordinator;
 record the returned worker ID before permitting writes (a worker may load its
 packet while awaiting this claim). Record application leases in the task contract,

@@ -195,6 +195,14 @@ def validate_project(root: Path, require_entrypoint: bool = True):
             except ValueError as exc:
                 errors.append(f"assets/manual-review.json: {exc}")
 
+    routing_path = flow / 'tools/model-routing.json'
+    if routing_path.exists() or routing_path.is_symlink():
+        try:
+            from model_routing import load_config
+            load_config(config_path=routing_path)
+        except (ValueError, OSError, UnicodeError) as exc:
+            errors.append(f'tools/model-routing.json: {exc}')
+
     temporary = flow / "verification" / "temporary"
     if temporary.is_dir():
         retained = [p for p in temporary.iterdir() if p.name != ".gitignore"]

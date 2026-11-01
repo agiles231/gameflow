@@ -1,0 +1,325 @@
+{
+  "version": 1,
+  "description": "GameFlow model routing. Explicit first-available candidate order; highest-priority matching rule wins. No empirical tool proficiency claims.",
+  "profiles": {
+    "focused": {
+      "description": "Small objective work; prefer Luna, then an explicitly approved capable fallback.",
+      "candidates": [
+        {
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium"
+        },
+        {
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "high"
+        }
+      ]
+    },
+    "visual": {
+      "description": "Bounded visual/application operations; scripting-heavy work belongs to engineering.",
+      "candidates": [
+        {
+          "model": "gpt-6.1-terra",
+          "reasoning_effort": "medium"
+        },
+        {
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "high"
+        }
+      ]
+    },
+    "engineering": {
+      "description": "Ordinary coding, automation and integration across understood interfaces.",
+      "candidates": [
+        {
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "medium"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "high"
+        }
+      ]
+    },
+    "engineering-high": {
+      "description": "Substantial but understood reasoning; try Sol at high effort.",
+      "candidates": [
+        {
+          "model": "gpt-6.1-sol",
+          "reasoning_effort": "high"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "high"
+        }
+      ]
+    },
+    "demanding": {
+      "description": "Conservative default for demanding spatial, temporal or coupled work.",
+      "candidates": [
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "high"
+        }
+      ]
+    },
+    "repair": {
+      "description": "Automatic escalation after failed acceptance; no smaller-model fallback.",
+      "candidates": [
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "high"
+        }
+      ]
+    }
+  },
+  "default_profile": "engineering",
+  "repair_profile": "repair",
+  "rules": [
+    {
+      "id": "generation-animation",
+      "description": "Creative mesh production and authorized rigging/animation require Astra; polling/delivery are distinct operations.",
+      "priority": 900,
+      "match": {
+        "operations_any": [
+          "mesh-generation",
+          "mesh-prompt-design",
+          "rigging",
+          "animation-production",
+          "animation-evaluation"
+        ]
+      },
+      "profile": "demanding"
+    },
+    {
+      "id": "demanding-complexity",
+      "description": "Demanding complexity overrides cheaper routine-work rules.",
+      "priority": 800,
+      "match": {
+        "dimensions_min": {
+          "complexity": 3
+        }
+      },
+      "profile": "demanding"
+    },
+    {
+      "id": "demanding-coupling",
+      "description": "Demanding coupling overrides cheaper routine-work rules.",
+      "priority": 800,
+      "match": {
+        "dimensions_min": {
+          "coupling": 3
+        }
+      },
+      "profile": "demanding"
+    },
+    {
+      "id": "demanding-ambiguity",
+      "description": "Demanding ambiguity overrides cheaper routine-work rules.",
+      "priority": 800,
+      "match": {
+        "dimensions_min": {
+          "ambiguity": 3
+        }
+      },
+      "profile": "demanding"
+    },
+    {
+      "id": "demanding-novelty",
+      "description": "Demanding novelty overrides cheaper routine-work rules.",
+      "priority": 800,
+      "match": {
+        "dimensions_min": {
+          "novelty": 3
+        }
+      },
+      "profile": "demanding"
+    },
+    {
+      "id": "demanding-visual",
+      "description": "Demanding visual overrides cheaper routine-work rules.",
+      "priority": 800,
+      "match": {
+        "dimensions_min": {
+          "visual": 3
+        }
+      },
+      "profile": "demanding"
+    },
+    {
+      "id": "demanding-temporal",
+      "description": "Demanding temporal overrides cheaper routine-work rules.",
+      "priority": 800,
+      "match": {
+        "dimensions_min": {
+          "temporal": 3
+        }
+      },
+      "profile": "demanding"
+    },
+    {
+      "id": "demanding-consequence",
+      "description": "Demanding consequence overrides cheaper routine-work rules.",
+      "priority": 800,
+      "match": {
+        "dimensions_min": {
+          "consequence": 3
+        }
+      },
+      "profile": "demanding"
+    },
+    {
+      "id": "uncertain-assessment",
+      "description": "Low confidence requires conservative reasoning, not cheap speculative execution.",
+      "priority": 700,
+      "match": {
+        "confidence": [
+          "low"
+        ]
+      },
+      "profile": "demanding"
+    },
+    {
+      "id": "substantial-complexity",
+      "description": "Substantial complexity uses a stronger engineering profile.",
+      "priority": 600,
+      "match": {
+        "dimensions_min": {
+          "complexity": 2
+        }
+      },
+      "profile": "engineering-high"
+    },
+    {
+      "id": "substantial-coupling",
+      "description": "Substantial coupling uses a stronger engineering profile.",
+      "priority": 600,
+      "match": {
+        "dimensions_min": {
+          "coupling": 2
+        }
+      },
+      "profile": "engineering-high"
+    },
+    {
+      "id": "substantial-ambiguity",
+      "description": "Substantial ambiguity uses a stronger engineering profile.",
+      "priority": 600,
+      "match": {
+        "dimensions_min": {
+          "ambiguity": 2
+        }
+      },
+      "profile": "engineering-high"
+    },
+    {
+      "id": "substantial-novelty",
+      "description": "Substantial novelty uses a stronger engineering profile.",
+      "priority": 600,
+      "match": {
+        "dimensions_min": {
+          "novelty": 2
+        }
+      },
+      "profile": "engineering-high"
+    },
+    {
+      "id": "substantial-consequence",
+      "description": "Substantial consequence uses a stronger engineering profile.",
+      "priority": 600,
+      "match": {
+        "dimensions_min": {
+          "consequence": 2
+        }
+      },
+      "profile": "engineering-high"
+    },
+    {
+      "id": "engineering-operations",
+      "description": "Code and multi-interface integration take precedence over routine visual operations in mixed phases.",
+      "priority": 500,
+      "match": {
+        "operations_any": [
+          "coding",
+          "scripting",
+          "integration",
+          "build",
+          "test",
+          "diagnosis",
+          "architecture"
+        ]
+      },
+      "profile": "engineering"
+    },
+    {
+      "id": "bounded-visual",
+      "description": "Clear visual/application work without demanding temporal judgment.",
+      "priority": 400,
+      "match": {
+        "operations_any": [
+          "visual-inspection",
+          "application-operation",
+          "image-edit",
+          "material-hookup"
+        ],
+        "dimensions_max": {
+          "temporal": 1
+        },
+        "confidence": [
+          "high",
+          "medium"
+        ],
+        "operations_only": [
+          "visual-inspection",
+          "application-operation",
+          "image-edit",
+          "material-hookup"
+        ]
+      },
+      "profile": "visual"
+    },
+    {
+      "id": "focused-objective",
+      "description": "Small explicit objective work, including independent delivery checks; not general implementation.",
+      "priority": 300,
+      "match": {
+        "operations_any": [
+          "inventory",
+          "log-extraction",
+          "job-polling",
+          "documentation",
+          "delivery-check"
+        ],
+        "dimensions_max": {
+          "size": 1,
+          "complexity": 1,
+          "coupling": 1,
+          "ambiguity": 1,
+          "novelty": 1,
+          "visual": 1,
+          "temporal": 1,
+          "consequence": 1
+        },
+        "confidence": [
+          "high"
+        ],
+        "operations_only": [
+          "inventory",
+          "log-extraction",
+          "job-polling",
+          "documentation",
+          "delivery-check"
+        ]
+      },
+      "profile": "focused"
+    }
+  ]
+}

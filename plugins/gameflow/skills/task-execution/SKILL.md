@@ -11,6 +11,8 @@ For inherited executing/verify or accepted-but-uncommitted work, recover its exi
 
 Follow the project’s managed `AGENTS.md` bootstrap. After selection, run `scripts/task_context.py --project PROJECT --task TASK-ID`, then read the task contract and required references. Read legacy or unparsed Context directly; do not treat the packet as readiness or authority. Use tool-discovery to select supported native CLI, MCP, or application scripting operations for the deliverable. Use desktop UI interaction only when no reliable programmable path exists.
 
+For failed-acceptance repairs, follow [model selection](../task-orchestration/references/model-selection.md): the coordinator must resolve and assign the configured repair profile (Astra by default) before repair mutations, including on resume. A worker whose model/effort does not match checkpoints and returns for reassignment.
+
 When delegated, honor assigned paths and application leases, return proposed shared-state changes to the coordinator, and never stage or commit. Request a resource lease before an application mutation; do independent preparation while it is unavailable. Keep changes within the contract. Create a child task for discovered work outside scope. Preserve user-authored and unrelated changes.
 
 At the checkpoint, return evidence to the coordinator to update the contract's completion evidence with changed artifacts, commands or application actions, versions where relevant, and known risks. If implementation is complete, move the task to `verify`, clear inactive transient ownership while retaining durable checkpoint provenance, and update the session handoff. Do not self-certify it as `done`. If blocked, record the exact unmet input or decision and the safe partial state.

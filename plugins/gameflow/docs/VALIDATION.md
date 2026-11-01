@@ -1,5 +1,15 @@
 # Version 0.4.0 validation
 
+## Configurable model routing
+
+`tests/test_model_routing.py` checks default workload routing, custom component
+rules and repair profiles, mixed-operation classification, complexity/confidence,
+explicit model/effort fallbacks, rule conflicts, invalid configuration, offline
+replay, read-only resolution and resumed repair counts. Compatibility cases cover
+absent configuration, unchanged legacy task/checkpoint formats, initializer
+preservation of custom policy and unrelated files, and optional project validation.
+These are routing tests, not live model proficiency or application-quality tests.
+
 This document retains historical coverage below. Current release additions are
 recorded in the versioned sections.
 

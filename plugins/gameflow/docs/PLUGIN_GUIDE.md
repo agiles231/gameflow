@@ -15,6 +15,7 @@ This guide describes the repository's 0.9.0 implementation and policies. It incl
 - [State machines](#state-machines)
 - [Normal operating workflow](#normal-operating-workflow)
 - [Autopilot and concurrency](#autopilot-and-concurrency)
+- [Configurable subagent model routing](MODEL_ROUTING.md)
 - [Asset production and Meshy configuration](#asset-production-and-meshy-configuration)
 - [Verification and review](#verification-and-review)
 - [Recovery and delivery](#recovery-and-delivery)
