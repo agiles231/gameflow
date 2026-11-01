@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "enabled": true,
+  "allow_provisional_integration": false,
+  "repair_risk_threshold": 2,
+  "repair_deferral_cost_threshold": 2,
+  "backlog": {
+    "soft_limit": 5,
+    "hard_limit": 10,
+    "repair_fraction": 0.5,
+    "max_new_features": 3,
+    "age_days_per_point": 7
+  },
+  "calibration": {
+    "window": 10,
+    "minimum_samples": 5,
+    "minimum_success_rate": 0.9,
+    "maximum_regressions": 0
+  }
+}

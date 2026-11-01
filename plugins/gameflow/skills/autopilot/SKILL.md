@@ -15,6 +15,42 @@ Inspect Git HEAD and staged, unstaged, and untracked changes before any run writ
 
 Record the tasks selected for this bounded run in the handoff, including recovered work and any required child/repair tasks added during execution. Do not remove unfinished selections to declare success. Completion of this run is distinct from completion of the entire game. Use the limits in `AUTOPILOT.md`. If it is absent, default to at most three completed task cycles, 90 minutes elapsed time, and one repair attempt per failed acceptance criterion. Always leave enough time to write a clean checkpoint. A scheduled run must stop before it could overlap the next scheduled run.
 
+Open user-invoked runs with a short human report of the objective and recognizable
+deliverables selected, including recovered work. Extend the selection register as
+children enter the run; retain interrupted and unfinished selections. Use
+`scripts/autonomy.py report` with the run record described in
+[evidence-based autonomy](../../docs/AUTONOMY.md) to format opening and closing
+reports without reconstructing the full conversation. Scheduled runs retain those
+reports in the handoff while honoring quiet/no-contact policies.
+
+## Evidence-based decisions
+
+Read the optional `.gameflow/tools/autonomy.json`. Fresh projects enable it;
+existing projects without it retain legacy behavior. When enabled, follow
+[evidence-based autonomy](../../docs/AUTONOMY.md): classify core, integration,
+final and polish criteria without weakening existing requirements; use
+`autonomy.py triage` after verification, `schedule` before new admission, and
+`calibrate` when considering category-specific delegation. Feed current
+revision-bound observations and issue/outcome summaries, not model confidence or
+full transcripts. Record relevant decision events with `--record --run-id`.
+
+Triage chooses repair now, preserve and schedule, or investigate/escalate from
+usability, propagation/dependency risk, isolation/recoverability, a specific new
+repair hypothesis and deferral cost. Preserve every failure with an actionable
+issue, affected consumers and a revisit condition. Reserve repair capacity and
+reduce feature admission at configured backlog limits. Existing selected phases
+retain their reservations and hard limits. Calibration can justify bounded
+reversible work only within existing authority; it does not change repair routing,
+paid limits, production restrictions, independent verification or user judgments.
+
+With this policy enabled, this invocation also authorizes coordinator commits of
+reviewed task-owned incomplete work, explicitly labeled partial/WIP. Keep its
+actual lifecycle status, failures, artifact identities and next action. A commit
+preserves work; provisional integration permits only an isolated candidate within
+authorized scope; verified acceptance alone satisfies dependencies. Neither a
+partial commit nor provisional integration marks a task done or qualifies an
+unfinished run for the default end-of-run push.
+
 ## Resolve blockers and keep progressing
 
 A blocker is a problem to work through, not a successful end to autopilot. Always
@@ -55,7 +91,7 @@ Use [the concurrent scheduling protocol](../task-orchestration/references/concur
 3. Process worker/job results as they arrive. Do not wait for a batch barrier. Release inactive ownership after reconciliation, record the checkpoint, and dispatch the next runnable phase or independent task. Provider jobs may run concurrently after serialized coordinator reservations/submissions; waiting jobs retain their task reservation but need no idle worker.
 4. Move completed implementation to `verify` and freeze its artifact revision. Assign a distinct subagent or separate session to verify actual outputs against the acceptance criteria; the implementation report is not proof. Make verifier capacity available as implementations return. If independent verification is unavailable, retain `verify` and record the limitation. Keep transient images in the temporary verification directory and remove only that attempt's captures after recording conclusions.
 5. On success, after all required user judgments also pass, the coordinator records acceptance and marks the task `done`. Serialize its checkpoint commit through the protocol below; dependent work waits for commit reconciliation. Independent workers may continue on disjoint outputs while the coordinator commits.
-6. On failure, apply [model selection](../task-orchestration/references/model-selection.md): resolve the configured repair profile (Astra by default) and replace a worker whose model/effort does not match, rather than sending it a repair follow-up. Then return the affected task to `executing`, apply the remaining bounded repair allowance, then assign fresh independent verification of the new revision. Preserve consumed repair counts across workers and resumes. A task-local failure does not cancel disjoint work.
+6. On failure, use enabled evidence-based triage to choose repair, preservation with scheduled follow-up, or investigation; otherwise retain the existing bounded repair path. For an authorized repair, apply [model selection](../task-orchestration/references/model-selection.md): resolve the configured repair profile (Astra by default) and replace a worker whose model/effort does not match, rather than sending it a repair follow-up. Then return the affected task to `executing`, apply the remaining bounded repair allowance, then assign fresh independent verification of the new revision. Preserve consumed repair counts across workers and resumes. A task-local failure does not cancel disjoint work.
 7. Refill free slots after every result, resource release, and reconciled commit. When there is no runnable phase, reconcile known workers/jobs and run blocker resolution within the elapsed-time limit. Trace unmet dependencies to the first actionable prerequisite; an empty ready queue does not justify a blocked-only exit.
 
 ### Serialized task commits
@@ -96,6 +132,13 @@ After final bookkeeping, push once when every selected run task is independently
 Use only the current branch’s configured GitHub upstream; never create an arbitrary remote, force-push, or push other refs. Fetch that upstream, confirm a fast-forward update is possible, and review the exact outgoing commits/diff for scope and secrets, including inherited commits. Do not include unrelated inherited commits without existing authority. Push the explicit current-branch-to-upstream-branch refspec. Proven unrelated uncommitted baseline edits alone do not prevent a push. If upstream is missing/non-GitHub, history diverged, scope is uncertain, or push fails, preserve local commits, record the exact blocker/recovery action, and report delivery as pending; do not rewrite history or retry blindly. Record the intended remote/ref and commit range before pushing and verify remote branch identity afterward. Report the confirmed pushed hash; a local post-push receipt may remain for next bookkeeping (do not create recursive commits/pushes merely to record the push itself).
 
 Scheduled runs should remain quiet during routine progress. Notify the user only on game completion, a blocker, a failed run, a required decision/authorization, or an inconsistent state that needs attention.
+
+End user-invoked runs with a plain-language outcome for every selected deliverable,
+including preserved, provisional, blocked, interrupted and unfinished work. State
+what is usable, what remains unverified or failed, the next action, and whether
+Git work is committed and actually pushed. Include IDs as references alongside
+recognizable names. Do not report only completed tasks or imply background work
+continues. `autonomy.py report --phase closing` marks absent results unfinished.
 
 ## CLI operation and decisions
 

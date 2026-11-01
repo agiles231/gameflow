@@ -16,7 +16,7 @@ from task_contract import render_contract
 def copy_templates(source: Path, destination: Path, replacements: dict[str, str], existing=False) -> None:
     for item in source.rglob("*"):
         relative = item.relative_to(source)
-        if existing and str(relative) in ('planning.json', 'PLANNING.md', 'ARTIFACT_RETENTION.md', '.gitignore'):
+        if existing and relative.as_posix() in ('planning.json', 'PLANNING.md', 'ARTIFACT_RETENTION.md', '.gitignore', 'tools/autonomy.json'):
             continue
         target = destination / relative
         if item.is_dir():

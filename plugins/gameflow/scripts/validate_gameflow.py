@@ -203,6 +203,21 @@ def validate_project(root: Path, require_entrypoint: bool = True):
         except (ValueError, OSError, UnicodeError) as exc:
             errors.append(f'tools/model-routing.json: {exc}')
 
+    autonomy_path = flow / 'tools/autonomy.json'
+    if autonomy_path.exists() or autonomy_path.is_symlink():
+        try:
+            from autonomy import load_config as load_autonomy
+            load_autonomy(path=autonomy_path)
+        except (ValueError, OSError, UnicodeError) as exc:
+            errors.append(f'tools/autonomy.json: {exc}')
+    issues_path = flow / 'issues.json'
+    if issues_path.exists() or issues_path.is_symlink():
+        try:
+            from autonomy import read as read_autonomy, validate_issues
+            validate_issues(read_autonomy(issues_path))
+        except (ValueError, OSError, UnicodeError) as exc:
+            errors.append(f'issues.json: {exc}')
+
     temporary = flow / "verification" / "temporary"
     if temporary.is_dir():
         retained = [p for p in temporary.iterdir() if p.name != ".gitignore"]

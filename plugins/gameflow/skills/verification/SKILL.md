@@ -20,6 +20,14 @@ A verifier must be a distinct subagent or separate session from the implementer.
 
 For each criterion record pass, fail, or not-tested, the observation/measurement, reproduction procedure, and exact artifact identity. Overall acceptance requires every required criterion to pass. Unavailable live tools or an unperformed packaged-play test are not passes. Rigging and animation production are deferred. Verify UI/audio through actual interaction/playback when available. Static images cannot establish timing or audible quality.
 
+When the contract classifies criteria as core, integration, final or polish,
+report each tier separately while retaining every required criterion in overall
+acceptance. Unclassified legacy criteria remain required. Provide the coordinator
+the observations for optional [triage](../../docs/AUTONOMY.md); preservation and
+isolated provisional integration are not acceptance. A failed check remains
+failed until a new revision passes; maintain issue and consumer references for
+deferred repairs. Do not use the implementer's confidence as verification.
+
 Store durable logs, measurements, and concise findings separately from disposable captures. Only remove temporary captures owned by this verification attempt after recording conclusions; preserve inherited files. On resumed verification, the independent verifier may reuse its durable passing observations only after confirming unchanged criteria, artifact/dependency hashes, provenance, and relevant application/environment versions. Cite original evidence and identity checks; unknown identity or changed context requires repeating affected checks. Author reports and stale screenshots are not reusable acceptance evidence. Required interaction, gameplay, build and package tests remain required; rerun when affected inputs/environment changed or the contract requires a fresh run. Recheck artifact identities before acceptance. Failed or changed outputs return for bounded repair or remain blocked/verify as appropriate; retain prior attempt findings and counts.
 
 ## Meshy delivery acceptance

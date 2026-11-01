@@ -48,6 +48,13 @@ The game is complete only when every completion criterion in `PROJECT.md` has du
 
 ## Workers and production choices
 
+New projects use `tools/autonomy.json` for evidence-based triage, repair capacity,
+backlog admission and category outcome calibration. Its decisions do not expand
+permissions or change repair model routing. Keep current issue/outcome summaries,
+record compact events, and distinguish preservation, isolated provisional
+integration and verified acceptance. A labeled partial commit may preserve
+incomplete work; it does not satisfy dependencies or the completed-run push rule.
+
 - Allow bounded subagent delegation when the runtime supports it.
 - Schedule all independent eligible tasks concurrently up to available runtime worker slots; honor any explicit project worker cap. Refill slots as results arrive, with capacity for distinct verification.
 - Count completed cycles plus selected unfinished tasks against the task-cycle limit; repairs and verification use their existing task reservation.
@@ -73,5 +80,11 @@ Skip `deferred` tasks and do not count them as completed cycles. Deferred tasks 
 On resume, reconcile live owners/jobs, accepted work awaiting commit, pending verification and partial implementation before selecting new work. Preserve checkpoint provenance and unrelated edits; an unchanged authorized checkpoint needs no renewed adoption permission. Record task commit hashes in final nonrecursive bookkeeping.
 
 ## End-of-run Git delivery
+
+Open user-invoked runs with the objective and selected deliverable names. End with
+every selected deliverable and its outcome, including unfinished/interrupted work,
+remaining action, commit state and actual push result. Retain selections when
+blocked; append repair/child tasks as admitted. Scheduled runs keep these reports
+durably while respecting quiet/no-contact policy.
 
 Allow local commits for independently verified tasks and one final push of completed run commits plus bookkeeping to the current branch’s configured GitHub upstream. Follow the autopilot Finish checks: every selected task must be accepted, done and committed with no unresolved run work. Unselected backlog does not block delivery. Honor explicit no-push overrides; no force pushes, arbitrary remotes, unrelated outgoing commits or pull requests. Record missing upstream, divergence or push failure and recovery without claiming delivery.

@@ -17,6 +17,14 @@ When delegated, honor assigned paths and application leases, return proposed sha
 
 At the checkpoint, return evidence to the coordinator to update the contract's completion evidence with changed artifacts, commands or application actions, versions where relevant, and known risks. If implementation is complete, move the task to `verify`, clear inactive transient ownership while retaining durable checkpoint provenance, and update the session handoff. Do not self-certify it as `done`. If blocked, record the exact unmet input or decision and the safe partial state.
 
+When the optional autonomy policy is enabled, return explicit core/integration/
+final/polish observations and the evidence needed for
+[triage](../../docs/AUTONOMY.md). Include usability, affected consumers,
+containment/recovery, a new repair hypothesis when one exists, deferral cost and
+actionable residual issues. The coordinator may preserve incomplete work in a
+labeled partial commit under existing authority. Do not convert a failed or
+untested requirement to a pass or optional polish to make preservation possible.
+
 
 Route engine implementation/integration to unreal-development, noncreative asset integration or explicit simple shapes to blender-production, all complex mesh generation through Meshy MCP to asset-generation, and build/test/performance/package tasks to build-delivery. Use the existing asset-pipeline for cross-tool provenance. Load only references relevant to the task. For UI and audio, define observable interaction/playback criteria and use the engine integration references; never claim quality from file existence alone.
 

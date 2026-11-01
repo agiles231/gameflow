@@ -121,3 +121,15 @@ These are instruction-level scenario checks, not automated agent benchmarks or
 live Blender/Unreal presentation tests. Skill frontmatter and local links are
 checked separately. No paid calls, game asset changes or project-policy migration
 are required for this release.
+
+## Version 0.10.0 autonomy
+
+`tests/test_autonomy.py` covers evidence-based repair versus preservation versus
+investigation, exhausted authority/allowance, stale artifact identities, independent
+acceptance, provisional containment, required legacy criteria, actionable failures,
+age/impact/dependency priorities, reserved repair capacity, soft/hard admission
+limits, category-local independent first-pass calibration, complete named run
+reports, read-only CLI decisions, idempotent timestamped audit recording and
+fresh/legacy initialization compatibility. These tests exercise supplied evidence;
+they do not establish model proficiency, real-world acceptance, or measured token
+or speed improvement. Live outcomes must be recorded per project.

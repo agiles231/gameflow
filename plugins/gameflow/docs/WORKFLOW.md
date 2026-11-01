@@ -133,3 +133,15 @@ application, confirming the review setup and asking explicit Yes/No questions wi
 revision-bound criteria. See [user verification](../skills/verification/references/user-verification.md).
 Optional asset-review queues remain optional; required judgment is recorded in the
 task contract and cannot be inferred from silence or a technical pass.
+
+## Evidence-based autonomy
+
+New projects use the optional [autonomy policy](AUTONOMY.md) to choose repair,
+preservation with scheduled follow-up, or investigation from revision-bound
+evidence. Existing projects without the policy retain legacy behavior. Separate
+partial commits, isolated provisional integration and verified acceptance; only
+acceptance satisfies dependency edges. Reserve repair capacity, reduce feature
+admission at backlog limits, and base category delegation on demonstrated
+independent first-pass outcomes. Keep current summaries and relevant audit IDs
+instead of replaying full histories. Opening/closing reports name every selected
+deliverable and retain unfinished/interrupted outcomes.

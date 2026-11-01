@@ -1,5 +1,8 @@
 # Repository rules
 
+Follow [the repository commit, push, and version policy](REPOSITORY_POLICY.md)
+for every change. Workers leave Git operations to the coordinating agent.
+
 ## Compatibility and migrations
 
 Any change that breaks compatibility must include an accompanying migration

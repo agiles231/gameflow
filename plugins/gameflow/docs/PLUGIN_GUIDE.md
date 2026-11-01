@@ -1,10 +1,20 @@
 # GameFlow plugin architecture and workflow guide
 
-GameFlow 0.9.0 is a Codex plugin for managing game development as bounded, resumable tasks. It combines 15 instruction-based skills, Python helpers, project templates, and durable project records. Its current production workflow supports Unreal development, Meshy-generated complex static meshes, Blender integration, and local builds and packaging. All rigging and animation production is deferred by default.
+GameFlow 0.10.0 is a Codex plugin for managing game development as bounded, resumable tasks. It combines 15 instruction-based skills, Python helpers, project templates, and durable project records. Its current production workflow supports Unreal development, Meshy-generated complex static meshes, Blender integration, and local builds and packaging. All rigging and animation production is deferred by default.
 
 The central operating rule is that implementation, independent acceptance, Git commits, and delivery are separate events. A successful tool call does not complete a task. A task can be accepted but still need a commit. A completed run does not mean the game is complete.
 
-This guide describes the repository's 0.9.0 implementation and policies. It includes the supported states and data elements, operational procedures, and an improvement backlog. Diagrams show intended workflow unless explicitly described as executable validation. Provider status names are provider-specific; conceptual provider phases below are not a new GameFlow enum.
+This guide describes the repository's 0.10.0 implementation and policies. It includes the supported states and data elements, operational procedures, and an improvement backlog. Diagrams show intended workflow unless explicitly described as executable validation. Provider status names are provider-specific; conceptual provider phases below are not a new GameFlow enum.
+
+## Evidence-based autonomy in 0.10.0
+
+The [autonomy policy and CLI](AUTONOMY.md) add deterministic triage, issue priority,
+repair capacity, category outcome calibration, compact audit records and complete
+run reports. Fresh projects enable decision support; existing projects retain
+legacy behavior until they explicitly adopt the optional policy. Partial commits
+preserve useful work without accepting failures, and isolated provisional
+integration never satisfies a task dependency. Existing task formats, model
+routing and conservative production/permission boundaries remain unchanged.
 
 ## Reading map
 
@@ -16,6 +26,7 @@ This guide describes the repository's 0.9.0 implementation and policies. It incl
 - [Normal operating workflow](#normal-operating-workflow)
 - [Autopilot and concurrency](#autopilot-and-concurrency)
 - [Configurable subagent model routing](MODEL_ROUTING.md)
+- [Evidence-based autonomy and complete run reports](AUTONOMY.md)
 - [Asset production and Meshy configuration](#asset-production-and-meshy-configuration)
 - [Verification and review](#verification-and-review)
 - [Recovery and delivery](#recovery-and-delivery)
@@ -142,6 +153,8 @@ The following paths are inside the game project unless prefixed with `plugins/ga
 | `assets/specifications/` | Substantial asset briefs. |
 | `assets/references/` | Durable approved references, registered in the manifest. |
 | `assets/manual-review.json` | Optional revision-specific feedback queue and actual/deferred presentation record. Missing legacy queue is valid and can be initialized on first delivery. |
+| `tools/autonomy.json` | Optional triage, backlog and category-outcome policy; enabled for fresh projects, absent means legacy behavior. |
+| `issues.json` and `events/` | Optional actionable issue summary and compact immutable decision events; never replace the task graph. |
 | `tools/meshy.json` | Nonsecret Meshy configuration, version 1: defaults, schema snapshots and recipes. Missing config leaves legacy structure valid but blocks complex generation. |
 | `tools/capabilities.json` | Observed available operations, limitations and tool identity. Not executable connection configuration or permission. |
 | `tools/applications.json` | Observed application versions, identity and host/path information. Recheck identity and ownership before mutation. |
@@ -179,7 +192,7 @@ The context helper extracts references without recursively loading their content
 
 | Field | Meaning |
 | --- | --- |
-| Root `schema_version` | Persisted format label; current templates use `1`. This is distinct from plugin release `0.9.0`. |
+| Root `schema_version` | Persisted format label; current templates use `1`. This is distinct from plugin release `0.10.0`. |
 | Root `next_id` | Integer above every allocated task number; used by the coordinator's task allocator. |
 | Root `tasks` | Canonical array of task objects. |
 | `id` | Stable `TASK-` ID with at least four digits, such as `TASK-0001`. |
@@ -567,10 +580,11 @@ Commands below run from the installed plugin root, with `PROJECT` replaced by th
 | `scripts/planning.py` | Validate/summary are read-only; render/assign write views or metadata; migrate previews unless `--apply`. |
 | `scripts/managed_guidance.py` | Shared managed-block parsing/rendering and plugin guidance support. |
 | `scripts/migrate_gameflow.py` | Preview/apply/rollback for managed bootstrap guidance with recoverable originals and receipts. |
+| `scripts/autonomy.py` | Read-only triage, scheduling, calibration and named reports; explicit `--record` saves idempotent audit events. No dispatch or acceptance writes. |
 | `scripts/artifact_audit.py` | Reads repository artifact/tracking information; optional `--output` writes the requested report. Does not clean history. |
 | `scripts/prepare_history_cleanup.py` | Explicit cleanup preparation in a new external isolated clone, using reviewed paths, verified backup and supplied filter tool. Does not update or push the source repository. |
 | `templates/` | Initial project records, managed block and common task contract. |
-| `tests/` | Eleven executable regression suites for local helpers and compatibility. |
+| `tests/` | Executable regression suites for local helpers and compatibility, including autonomy behavior. |
 | Skill `references/` and `agents/openai.yaml` | Detailed task-specific procedures and, where present, agent UI/dependency metadata. Metadata does not prove a live connection. |
 | `.codex-plugin/plugin.json` and marketplace manifest | Plugin release/skill metadata and local marketplace registration. |
 
@@ -665,7 +679,7 @@ State/field tables above define exact enums and persisted elements. These terms 
 
 ## Gaps and improvement opportunities
 
-The following are observed implementation limits or documentation inconsistencies, followed by proposed improvements. They are not additional runtime requirements in 0.9.0. Priority reflects potential impact on lost work, incorrect acceptance or duplicate spending, rather than estimated implementation effort.
+The following are observed implementation limits or documentation inconsistencies, followed by proposed improvements. They are not additional runtime requirements in 0.10.0. Priority reflects potential impact on lost work, incorrect acceptance or duplicate spending, rather than estimated implementation effort.
 
 | Priority | Observation and evidence | Consequence | Proposed improvement and useful acceptance test |
 | --- | --- | --- | --- |

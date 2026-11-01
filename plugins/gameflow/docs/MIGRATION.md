@@ -1,6 +1,6 @@
 # Upgrade an existing GameFlow project
 
-Version 0.9.0 retains schema version 1. Existing projects and legacy Markdown
+Version 0.10.0 retains schema version 1. Existing projects and legacy Markdown
 contracts remain supported without migration. Refresh the installed local plugin
 using the repository README's remove/add procedure and start a fresh session.
 Use the refreshed plugin's scripts, not a copied script from an older installation.
@@ -80,3 +80,24 @@ needed. Run validation after restoring an originally valid entrypoint.
 ## Planning and retention adoption
 
 Planning migration is a separate explicit operation; see [PLANNING.md](PLANNING.md) for its complete plan format and preview/apply commands. Guidance migration does not alter task metadata, Git tracking or history. Existing retention policy takes precedence; review ignore rules and tracked outputs separately using [ARTIFACT_RETENTION.md](ARTIFACT_RETENTION.md). No Lodgepole-specific task or asset decisions are bundled.
+
+## Version 0.10.0 compatibility
+
+The optional autonomy policy and its standalone assessment, issue, outcome and
+report inputs are additive. No task/checkpoint format or existing CLI is replaced.
+Legacy unclassified acceptance criteria stay required, existing dependency gates
+still require accepted work, and default failed-acceptance repair routing is
+unchanged. Existing projects without `tools/autonomy.json` use legacy behavior;
+reinitializing them does not create the policy. Fresh projects enable it.
+
+No migration is required. Existing projects may explicitly adopt the defaults
+printed by `scripts/autonomy.py defaults` as `.gameflow/tools/autonomy.json`;
+review and validate before using them. Keep the previous Git revision or a copy
+when editing policy. Set `enabled: false` to return to legacy scheduling without
+deleting issues, audit events or evidence. The helper never rewrites task graphs,
+acceptance, commit state, or model routing.
+
+`tests/test_autonomy.py` covers old projects without config, legacy criteria,
+repeated initialization, authored-policy and unrelated graph preservation,
+revision/independence gates, and explicit opt-in. Existing compatibility and
+model-routing suites remain the regression baseline.

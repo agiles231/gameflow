@@ -9,6 +9,14 @@ Treat `.gameflow/tasks/index.json` as the canonical graph. Keep task contracts i
 
 A task is sufficiently bounded when it has one principal durable deliverable, existing inputs, explicit dependencies, observable acceptance criteria, a clean checkpoint, and a failure mode that yields a useful report. Split work that crosses ownership boundaries, combines creative decisions with implementation, or cannot be verified independently.
 
+For projects using the optional autonomy policy, apply
+[evidence-based autonomy](../../docs/AUTONOMY.md) before admission and after
+verification. Distinguish core, integration, final and polish criteria without
+weakening any required check. Use deterministic triage, issue scheduling and
+category outcome calibration; keep unresolved failures, consumers, revisit
+conditions and repair reservations visible. Preservation commits and isolated
+provisional integration never satisfy task dependencies or establish acceptance.
+
 Use lifecycle states exactly: `planned`, `ready`, `executing`, `verify`, `done`, `blocked`, `deferred`. Implementation ends at `verify`. Only an acceptance pass moves work to `done`. Follow [the checkpoint protocol](references/checkpoints.md) for durable ownership, ordered recovery, acceptance revisions, amendments and commit state. This protocol also governs checkpoints returned by production/configuration skills; clearing an active worker never discards change provenance.
 
 After selection, use `scripts/task_context.py --project PROJECT --task TASK-ID` to identify references, then read the contract and any legacy or unparsed Context directly. Give a worker the task contract, the minimum required project constraints, and the files named by `Context`. Use `fork_turns="none"` for fresh workers when supported, supplying context explicitly rather than inheriting conversation history. Include relevant user decisions and authority verbatim or by durable reference; preserve acceptance quality and do not omit constraints. Select the worker model using [model selection](references/model-selection.md) before every dispatch or reuse; failed-acceptance repairs use the configured repair profile (Astra by default), including after resume. Reuse a worker only while its task context remains relevant. Require a return packet containing changed artifacts, commands/actions taken, acceptance evidence, residual risks, and proposed child tasks.
